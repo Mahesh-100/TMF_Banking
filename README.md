@@ -1,1 +1,1 @@
-Bank application using servlets
+Bank application
