@@ -10,10 +10,11 @@ import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+//import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class HomeServlet
@@ -30,9 +31,17 @@ public class HomeServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		HttpSession session= request.getSession();
+		//HttpSession session= request.getSession();
 		
-       	String user=(String) session.getAttribute("user");
+       //	String user=(String) session.getAttribute("user");
+		String	user="";
+		Cookie[] cookie=request.getCookies();
+		for( Cookie c:cookie) {
+			if(c.getName().equals("user")) {
+				user=c.getValue();
+			}
+			
+		}
        	String DB_URL = "jdbc:mysql://localhost:3306/bank_customers";
         String DB_USER = "root";
         String DB_PASSWORD = "89788";
@@ -122,7 +131,8 @@ public class HomeServlet extends HttpServlet {
         				+ "\r\n"
         				+ "";
         		   out.append(res);
-        		session.removeAttribute("user");
+        		   
+        		//session.removeAttribute("user");
         	}
         	
         	

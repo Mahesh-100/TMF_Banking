@@ -10,10 +10,11 @@ import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+//import javax.servlet.http.HttpSession;
 
 
 
@@ -31,8 +32,10 @@ public class LoginServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String user=request.getParameter("username");
 		String password=request.getParameter("password");
-		HttpSession session =request.getSession();
-   		session.setAttribute("user", user);
+//		HttpSession session =request.getSession();
+//   		session.setAttribute("user", user);
+		Cookie cookie= new Cookie("user",user);
+		response.addCookie(cookie);
 		String DB_URL = "jdbc:mysql://localhost:3306/bank_customers";
         String DB_USER = "root";
         String DB_PASSWORD = "89788";

@@ -5,9 +5,11 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+//import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class StatementServlet
@@ -29,6 +31,19 @@ public class StatementServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
+		//HttpSession session =request.getSession();
+
+
+       	//String user=(String) session.getAttribute("user");
+		String	user="";
+		Cookie[] cookie=request.getCookies();
+		for( Cookie c:cookie) {
+			if(c.getName().equals("user")) {
+				user=c.getValue();
+			}
+			
+		}
+
 		String res="\r\n"
 				+ "<html>\r\n"
 				+ "<head>\r\n"
@@ -90,13 +105,14 @@ public class StatementServlet extends HttpServlet {
 				+ "        <a href=\"http://localhost:8082/TMF_Banking/login.html\">Logout</a>\r\n"
 				+ "    </nav>\r\n"
 				+ "\r\n"
-				+ "    <!-- Add your page content here -->\r\n"
+				+ "    <h1>Welcome  "+user+"\r\n"
 				+ "\r\n"
 				+ "</body>\r\n"
 				+ "</html>\r\n"
 				+ "\r\n"
 				+ "";
 		out.append(res);
+		//session.removeAttribute("user");
 		
 	}
 
