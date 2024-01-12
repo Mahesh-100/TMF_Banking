@@ -6,9 +6,25 @@
 <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0px;
+        }
+		 header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
+        header img {
+            width: 50px; /* Adjust the size of the logo as needed */
+            height: auto;
+        }
+
+        header h1 {
+            margin: 0;
+        }
         form {
             max-width: 400px;
             margin: 0 auto;
@@ -38,9 +54,18 @@
         button:hover {
             background-color: #45a049;
         }
+       
     </style>
 </head>
 <body>
+<header>
+        <div>
+            <img src="your-logo.png" alt="Company Logo">
+        </div>
+        <div>
+            <h1>TMF_Banking</h1>
+        </div>
+    </header>
 <form action="http://localhost:8082/TMF_Banking/Register" method="post">
 		<h1>Register here</h1>
         <label for="username">Username:</label>

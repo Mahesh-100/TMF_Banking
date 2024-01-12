@@ -2,24 +2,47 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>TMF_Login page</title>
+<title>Login page</title>
 <style>
         body {
+            font-family: Arial, sans-serif;
+            margin: 0;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            position: fixed;
+            top: 0;
+        }
+
+        header img {
+            width: 50px;
+            height: auto;
+        }
+
+        header h1 {
             margin: 0;
         }
 
         .login-box {
             width: 300px;
-            padding: 20px;
+            padding: 50px;
             border: 1px solid #ccc;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1; /* Ensure login box is above the header */
+            background-color: white;
         }
-
         .login-box label {
             display: block;
             margin-bottom: 8px;
@@ -38,14 +61,32 @@
             background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            border-radius: 4px
+
+        /* Optional: Style for the company logo and name */
+        .company-logo {
+            margin-right: auto;
         }
+
+        .company-name {
+            margin-left: auto;
+        }
+        
+        
+       
+
+        
     </style>
 </head>
 <body>
+<header>
+        <div class="company-logo">
+            <img src="company-logo.png" alt="Company Logo">
+        </div>
+        <h1 class="company-name">Company Name</h1>
+    </header>
 
-<div class="login-box">
+    <div class="login-box">
 		
         <h2>Login</h2>
         <form action="http://localhost:8082/TMF_Banking/LoginServlet" method="post">
@@ -63,3 +104,7 @@
     </div>
 </body>
 </html>
+
+
+
+
