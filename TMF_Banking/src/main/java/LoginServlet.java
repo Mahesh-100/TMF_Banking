@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
         	Class.forName("com.mysql.cj.jdbc.Driver");
         	Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
         	Statement stmt=conn.createStatement();
-        	ResultSet rs=stmt.executeQuery("select *from user_credentials where user='"+user+"' and password='"+password+"'");
+        	ResultSet rs=stmt.executeQuery("select *from user_info where user='"+user+"' and password='"+password+"'");
         	
        		//HttpSession session= request.getSession();
        	
