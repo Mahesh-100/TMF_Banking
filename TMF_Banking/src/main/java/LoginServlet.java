@@ -31,8 +31,9 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         
         try (Connection connection = DBConnection.getConnection()) {
-            String sql = "select *from user_info where username=? and password=?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            String query1 = "select us.*,ba.*from user_info us join bank_account ba on us.username=ba.username where us.username= ? and password=?";
+            
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query1)) {
                 preparedStatement.setString(1, username);
                 preparedStatement.setString(2, password);
                 
@@ -46,6 +47,7 @@ public class LoginServlet extends HttpServlet {
            				+ "</html>";
            		 out.append(res); 
             	}else {
+            		
             		res="\r\n"
             				+ "<html>\r\n"
             				+ "<head>\r\n"
@@ -121,9 +123,15 @@ public class LoginServlet extends HttpServlet {
             				+ "<p>Full Name:"+rs.getString("user_fullname")+"</p>\r\n"
             				+ "<p>Phone No: "+rs.getString("phone_no")+"</p>\r\n"
             				+ "<p>Email: "+rs.getString("email")+"</p>\r\n"
-            				+ "<p>Address:"+rs.getString("username")+"</p>"
+            				+ "<p>Address:"+rs.getString("user_address")+"</p>"
             				+ "</div>\r\n"
-            				+ " <div class=\"block\"></div>\r\n"
+            				+ " <div class=\"block\">"
+            				+"<p>Account Number: "+rs.getString("bank_account_no")+"</p>"
+            				+"<p>Account Number: "+rs.getString("bank_name")+"</p>"
+            				+"<p>Account Number: "+rs.getString("IFSC_code")+"</p>"
+            				+"<p>Account Number: "+rs.getString("account_type")+"</p>"
+            				+"<p>Account Number: "+rs.getString("current_balance")+"</p>"
+            				+"</div>\r\n"
             				+ " <div class=\"block\"></div>\r\n"
             				+ "</div>\r\n"
             				+ "</body>\r\n"
@@ -132,8 +140,19 @@ public class LoginServlet extends HttpServlet {
             				+ "";
             		out.append(res);
             	}
-                 
-         }
+            }
+//           String query2 = "select *from bank_account where username=?";
+//            	try (PreparedStatement preparedStatement2 = connection.prepareStatement(query2)) {
+//                    preparedStatement2.setString(1, username);
+//                    
+//                    
+//                    ResultSet rs2=preparedStatement2.executeQuery();
+//                    String res="";
+//                    while(rs2.next()) {
+//                    	res="workin properly";
+//                    	out.append(res);
+//                    }
+//         }
            
             	
         } catch (SQLException e) {
