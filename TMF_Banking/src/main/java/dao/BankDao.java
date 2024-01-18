@@ -20,18 +20,19 @@ public class BankDao {
 //		
 //	}
 //	
-	public UserDTO getUserDetails(String username,String password) {
+	public UserDTO getUserDetails(String username) {
 		UserDTO resUser= new UserDTO();
 		try (Connection connection = DBConnection.getConnection()) {
-            String query1 = "select *from user_info where username=? and password=?";
+            String query1 = "select *from user_info where username=? ";
             
             try (PreparedStatement preparedStatement = connection.prepareStatement(query1)) {
                 preparedStatement.setString(1, username);
-                preparedStatement.setString(2, password);
+ //               preparedStatement.setString(2, password);
                 
                 ResultSet rs=preparedStatement.executeQuery();
                 while(rs.next()) {
                 	resUser.setUsername(rs.getString("Username"));
+                	resUser.setPassword(rs.getString("password"));
                 	resUser.setUser_fullname(rs.getString("User_fullname"));
                 	resUser.setPhone_no(rs.getString("phone_no"));
                 	resUser.setEmail(rs.getString("email"));

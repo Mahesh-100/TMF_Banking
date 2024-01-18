@@ -30,14 +30,20 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
       
         BankDao dao=new BankDao();
-        UserDTO user=dao.getUserDetails(username, password);
+        UserDTO user=dao.getUserDetails(username);
         if(user!=null) {
-        	HttpSession session=request.getSession();
-        	session.setAttribute("user", user);
-        	RequestDispatcher rd=request.getRequestDispatcher("Home.jsp");
-        	rd.forward(request, response);
+        	if(user.getPassword().equals(password)) {
+        		HttpSession session=request.getSession();
+            	session.setAttribute("user", user);
+            	RequestDispatcher rd=request.getRequestDispatcher("Home.jsp");
+            	rd.forward(request, response);
+        	}else {
+        		response.sendRedirect("http://localhost:8082/TMF_Banking/login.html");
+        	}
+        	
         }else {
-        	response.sendRedirect("login.html");
+        	response.sendRedirect("http://localhost:8082/TMF_Banking/login.html");
+        	
         }
         
      

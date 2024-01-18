@@ -15,7 +15,13 @@
         </div>
         <h1 class="company-name">TMF_BANKING</h1>
 </header>   
-<h1>Welcome <%UserDTO user = (UserDTO) session.getAttribute("user"); %></h1>
+<h2>Welcome <%UserDTO user = (UserDTO) session.getAttribute("user");
+out.print(user.getUsername().toUpperCase());
+%></h2>
+<p>Full Name:<% out.print(user.getUser_fullname());%></p>
+<p>Phone number:<%out.print(user.getPhone_no()); %></p>
+<p>Email:<%out.print(user.getEmail()); %></p>
+<p>Address:<%out.print(user.getAddress()); %></p>
 
 </body>
 </html>
