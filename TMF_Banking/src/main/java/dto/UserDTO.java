@@ -1,7 +1,7 @@
 package dto;
 public class UserDTO {
 		  private int user_id;
-		  private String user_name;
+		  private String username;
 		  private String password;
 		  private String user_fullname;
 		  private String phone_no;
@@ -13,11 +13,11 @@ public class UserDTO {
 		public void setUser_id(int user_id) {
 			this.user_id = user_id;
 		}
-		public String getUser_name() {
-			return user_name;
+		public String getUsername() {
+			return username;
 		}
-		public void setUser_name(String user_name) {
-			this.user_name = user_name;
+		public void setUsername(String username) {
+			this.username = username;
 		}
 		public String getPassword() {
 			return password;

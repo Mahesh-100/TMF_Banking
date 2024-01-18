@@ -1,4 +1,4 @@
-
+package db;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -33,7 +33,7 @@ public class RegisterServlet extends HttpServlet {
         String userAddress = request.getParameter("user_address");
 
         try (Connection connection = DBConnection.getConnection()) {
-            String sql = "INSERT INTO user_info (username, password, user_fullname, phone_no, email, address) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO user_info (username, password, user_fullname, phone_no, email, user_address) VALUES (?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, username);
                 preparedStatement.setString(2, password);
