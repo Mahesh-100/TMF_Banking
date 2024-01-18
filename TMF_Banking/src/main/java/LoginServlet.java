@@ -3,7 +3,7 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 
-
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,10 +29,11 @@ public class LoginServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String username = request.getParameter("username");
         String password = request.getParameter("password");
-        
+        RequestDispatcher rd=request.getRequestDispatcher("/Home.jsp");
         BankDao dao=new BankDao();
         UserDTO user=dao.getUserDetails(username, password);
-        out.print(user.getUser_fullname());
+        rd.forward(request, response);
+        //out.print(user.getUser_fullname());
         
 	}
 
