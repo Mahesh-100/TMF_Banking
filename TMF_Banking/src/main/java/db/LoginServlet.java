@@ -32,22 +32,29 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
       
         BankDao dao=new BankDao();
-        UserDTO user=dao.getUserDetails(username,password);
+        UserDTO user=dao.getUserDetails(username);
 
-        if(user==null) {
+        if(user!=null) {
+        	if(user.getPassword().equals(password)) {
+        		ArrayList<BankAccountDTO> banklist=dao.getAllAccountDetails(user.getUsername());
+                
+        	     
+            	HttpSession session=request.getSession();
+            	session.setAttribute("user", user);
+            	request.setAttribute("accounts", banklist);
+            	RequestDispatcher rd=request.getRequestDispatcher("Home.jsp");
+            	rd.forward(request, response);
+        	}else {
+        		RequestDispatcher rd=request.getRequestDispatcher("login.jsp");
+            	rd.forward(request, response);
+        	}
         	//request.setAttribute("error","Invalid username or password");
-        	RequestDispatcher rd=request.getRequestDispatcher("login.jsp");
-        	rd.forward(request, response);
+        	
         	
         }else {
-            ArrayList<BankAccountDTO> banklist=dao.getAllAccountDetails(user.getUsername());
-           
-     
-        	HttpSession session=request.getSession();
-        	session.setAttribute("user", user);
-        	request.setAttribute("accounts", banklist);
-        	RequestDispatcher rd=request.getRequestDispatcher("Home.jsp");
+        	RequestDispatcher rd=request.getRequestDispatcher("login.jsp");
         	rd.forward(request, response);
+            
         }
         
      

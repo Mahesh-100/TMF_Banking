@@ -22,6 +22,7 @@
 <button style="width:10%" class="logout" onclick="requestlogout();">Logout</button>
 </div>
  <div class="userDetails">
+ 
    <h2>Welcome <%UserDTO user=(UserDTO)session.getAttribute("user");
 out.print(user.getUsername());
 %>
@@ -33,9 +34,10 @@ out.print(user.getUsername());
 </div>
 
 <div class="accountsList">
- <a href="addAccount.jsp" class="AllBtn" style="float: right; margin-right: 20px;">Add Account</a>
+ <a href="AddAccount.jsp" class="AllBtn" style="float: right; margin-right: 20px;"  >Add Account</a>
     <!-- Display accounts in radio buttons here -->
      <h2>Accounts</h2>
+    
      <% ArrayList<BankAccountDTO> banklist=(ArrayList<BankAccountDTO>)request.getAttribute("accounts");%>
      <table class="Bank-table">
      <thead>

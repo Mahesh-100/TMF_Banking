@@ -36,7 +36,7 @@ public class RegisterServlet extends HttpServlet {
         UserDTO user= new UserDTO(username,password,userFullname,phoneNo,email,userAddress);
         BankDao userDAO= new BankDao();
         try {
-			if(userDAO.insert(user)) {
+			if(userDAO.insertUserDTO(user)) {
 				response.sendRedirect("login.jsp");
 				
 			}else {

@@ -8,6 +8,22 @@ public class BankAccountDTO {
 	private String IFSC_code;
 	private String account_type;
 	private String current_balance;
+	
+	
+	public BankAccountDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public BankAccountDTO(String username, String account_no, String bank_name, String iFSC_code, String account_type,
+			String current_balance) {
+		super();
+		this.username = username;
+		this.account_no = account_no;
+		this.bank_name = bank_name;
+		IFSC_code = iFSC_code;
+		this.account_type = account_type;
+		this.current_balance = current_balance;
+	}
 	public int getAccount_id() {
 		return account_id;
 	}

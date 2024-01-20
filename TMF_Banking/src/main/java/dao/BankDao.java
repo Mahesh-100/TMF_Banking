@@ -42,14 +42,14 @@ public class BankDao {
 		
 	}
 	
-	public UserDTO getUserDetails(String username,String password) {
+	public UserDTO getUserDetails(String username) {
 		
 		try (Connection connection = DBConnection.getConnection()) {
-            String query = "select *from user_info where username=? and password=?";
+            String query = "select *from user_info where username=?";
             
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, username);
-                preparedStatement.setString(2, password);
+     //           preparedStatement.setString(2, password);
                 
                 ResultSet rs=preparedStatement.executeQuery();
                 if(rs.next()) {
@@ -69,7 +69,7 @@ public class BankDao {
 		}
 		return null;
 	}
-	public boolean insert(UserDTO user) throws SQLException  {
+	public boolean insertUserDTO(UserDTO user) throws SQLException  {
 		try (Connection connection = DBConnection.getConnection()){
 			String sql = "INSERT INTO user_info (username, password, user_fullname, phone_no, email, user_address) VALUES (?, ?, ?, ?, ?, ?)";
 		try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -87,9 +87,29 @@ public class BankDao {
 			e.printStackTrace();
 		}
 		return false;
-	} 		
+	}
 }
-	
+	public boolean insertBankAccount(BankAccountDTO bank) throws SQLException  {
+		try (Connection connection = DBConnection.getConnection()){
+			String sql = "INSERT INTO bank_account (username, bank_account_no,bank_name, IFSC_code, account_type, current_balance) VALUES (?, ?, ?, ?, ?, ?)";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, bank.getUsername());
+            preparedStatement.setString(2, bank.getAccount_no());
+            preparedStatement.setString(3, bank.getBank_name());
+            preparedStatement.setString(4, bank.getIFSC_code());
+            preparedStatement.setString(5, bank.getAccount_type());
+            preparedStatement.setString(6, bank.getCurrent_balance());
+
+            int rowsAffected=preparedStatement.executeUpdate();
+            return rowsAffected>0;
+        } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+}
+
 	
 	
 	
