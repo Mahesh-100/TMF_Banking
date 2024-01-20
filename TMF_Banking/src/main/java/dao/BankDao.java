@@ -5,16 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
 import db.DBConnection;
 import dto.BankAccountDTO;
 import dto.UserDTO;
 
 public class BankDao {
 				
-	public List<BankAccountDTO> getAccountDetails(String username){
-		List<BankAccountDTO> BankList=new ArrayList<BankAccountDTO>();
+	public ArrayList<BankAccountDTO> getAllAccountDetails(String username){
+		ArrayList<BankAccountDTO> BankList=new ArrayList<BankAccountDTO>();
 		try(Connection connection = DBConnection.getConnection()){
 			String query="select *from bank_account where username=?";
 			try(PreparedStatement preparedStatement = connection.prepareStatement(query)){

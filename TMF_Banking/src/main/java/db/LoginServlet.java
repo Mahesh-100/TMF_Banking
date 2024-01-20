@@ -1,8 +1,7 @@
 package db;
 
 import java.io.IOException;
-import java.util.List;
-
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +33,6 @@ public class LoginServlet extends HttpServlet {
       
         BankDao dao=new BankDao();
         UserDTO user=dao.getUserDetails(username,password);
-    	
 
         if(user==null) {
         	//request.setAttribute("error","Invalid username or password");
@@ -42,9 +40,12 @@ public class LoginServlet extends HttpServlet {
         	rd.forward(request, response);
         	
         }else {
-        	
+            ArrayList<BankAccountDTO> banklist=dao.getAllAccountDetails(user.getUsername());
+           
+     
         	HttpSession session=request.getSession();
         	session.setAttribute("user", user);
+        	request.setAttribute("accounts", banklist);
         	RequestDispatcher rd=request.getRequestDispatcher("Home.jsp");
         	rd.forward(request, response);
         }
