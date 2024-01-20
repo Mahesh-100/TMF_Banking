@@ -1,6 +1,6 @@
 package dto;
 public class UserDTO {
-		  private int user_id;
+		  
 		  
 		  private String username;
 		  private String password;
@@ -8,12 +8,25 @@ public class UserDTO {
 		  private String phone_no;
 		  private String email;
 		  private String address;
-		public int getUser_id() {
-			return user_id;
+		
+		  
+		public UserDTO() {
+			super();
+			// TODO Auto-generated constructor stub
 		}
-		public void setUser_id(int user_id) {
-			this.user_id = user_id;
+
+		public UserDTO( String username, String password, String user_fullname, String phone_no,
+				String email, String address) {
+			super();
+			
+			this.username = username;
+			this.password = password;
+			this.user_fullname = user_fullname;
+			this.phone_no = phone_no;
+			this.email = email;
+			this.address = address;
 		}
+		
 		public String getUsername() {
 			return username;
 		}

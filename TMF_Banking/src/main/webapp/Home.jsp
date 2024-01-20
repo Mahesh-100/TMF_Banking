@@ -5,23 +5,29 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Home page</title>
-<link href="Style.css" rel="stylesheet">
+<title>Home</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header>
-<div class="company-logo">
-            <img src="company-logo.png" alt="Company Logo">
-        </div>
-        <h1 class="company-name">TMF_BANKING</h1>
-</header>   
-<h2>Welcome <%UserDTO user = (UserDTO) session.getAttribute("user");
-out.print(user.getUsername().toUpperCase());
-%></h2>
-<p>Full Name:<% out.print(user.getUser_fullname());%></p>
-<p>Phone number:<%out.print(user.getPhone_no()); %></p>
-<p>Email:<%out.print(user.getEmail()); %></p>
-<p>Address:<%out.print(user.getAddress()); %></p>
+        <img src="company-logo.png" alt="Company Logo">
+        <h1>Company Name</h1>
+</header>
+<div class="home-container"> 
+<h2>Welcome <%UserDTO user=(UserDTO)session.getAttribute("user");
+out.print(user.getUsername());
+%>
+</h2>
+<p>Full Name:<%out.print(user.getUser_fullname()); %></p>
+<p>Phone Number:<%=user.getPhone_no() %></p>
+<p>Email:<%=user.getEmail() %></p>
+<p>Address:<%=user.getAddress() %></p>
 
+
+
+
+</div>
+    
+    
 </body>
 </html>

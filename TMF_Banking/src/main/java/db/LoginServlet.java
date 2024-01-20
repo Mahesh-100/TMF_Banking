@@ -1,6 +1,8 @@
-
+package db;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.BankDao;
+import dto.BankAccountDTO;
 import dto.UserDTO;
 
 
@@ -30,20 +33,20 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
       
         BankDao dao=new BankDao();
-        UserDTO user=dao.getUserDetails(username);
-        if(user!=null) {
-        	if(user.getPassword().equals(password)) {
-        		HttpSession session=request.getSession();
-            	session.setAttribute("user", user);
-            	RequestDispatcher rd=request.getRequestDispatcher("Home.jsp");
-            	rd.forward(request, response);
-        	}else {
-        		response.sendRedirect("http://localhost:8082/TMF_Banking/login.html");
-        	}
+        UserDTO user=dao.getUserDetails(username,password);
+    	
+
+        if(user==null) {
+        	//request.setAttribute("error","Invalid username or password");
+        	RequestDispatcher rd=request.getRequestDispatcher("login.jsp");
+        	rd.forward(request, response);
         	
         }else {
-        	response.sendRedirect("http://localhost:8082/TMF_Banking/login.html");
         	
+        	HttpSession session=request.getSession();
+        	session.setAttribute("user", user);
+        	RequestDispatcher rd=request.getRequestDispatcher("Home.jsp");
+        	rd.forward(request, response);
         }
         
      
