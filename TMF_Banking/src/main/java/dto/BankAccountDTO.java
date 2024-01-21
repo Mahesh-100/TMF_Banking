@@ -14,6 +14,8 @@ public class BankAccountDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 	public BankAccountDTO(String username, String account_no, String bank_name, String iFSC_code, String account_type,
 			double current_balance) {
 		super();
@@ -24,7 +26,8 @@ public class BankAccountDTO {
 		this.account_type = account_type;
 		this.current_balance = current_balance;
 	}
-	
+
+
 	public String getUsername() {
 		return username;
 	}
