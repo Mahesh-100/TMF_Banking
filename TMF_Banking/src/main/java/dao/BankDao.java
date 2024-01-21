@@ -24,7 +24,7 @@ public class BankDao {
 					bankDao.setBank_name(rs.getString("bank_name"));
 					bankDao.setIFSC_code(rs.getString("IFSC_code"));
 					bankDao.setAccount_type(rs.getString("account_type"));
-					bankDao.setCurrent_balance(rs.getString("current_balance"));
+					bankDao.setCurrent_balance(rs.getDouble("current_balance"));
 					BankList.add(bankDao);
 				}
 				
@@ -98,7 +98,7 @@ public class BankDao {
             preparedStatement.setString(3, bank.getBank_name());
             preparedStatement.setString(4, bank.getIFSC_code());
             preparedStatement.setString(5, bank.getAccount_type());
-            preparedStatement.setString(6, bank.getCurrent_balance());
+            preparedStatement.setDouble(6, bank.getCurrent_balance());
 
             int rowsAffected=preparedStatement.executeUpdate();
             return rowsAffected>0;

@@ -5,13 +5,14 @@
 <%@ page import="dto.BankAccountDTO" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="db.LoginServlet" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Home</title>
 <link rel="stylesheet" href="styles.css">
-
+<script type="text/javascript" src="Script.js"></script>
 </head>
 <body>
 <header>
@@ -21,12 +22,15 @@
 <div>
 <button style="width:10%" class="logout" onclick="requestlogout();">Logout</button>
 </div>
+<% UserDTO user=(UserDTO)session.getAttribute("user");
+   if(user==null) {
+	   response.sendRedirect("login.jsp");
+   }else{%>
  <div class="userDetails">
- 
-   <h2>Welcome <%UserDTO user=(UserDTO)session.getAttribute("user");
-out.print(user.getUsername());
-%>
+
+ <h2><% out.print(user.getUsername());%>
 </h2>
+   
 <p>Full Name:<%out.print(user.getUser_fullname()); %></p>
 <p>Phone Number:<%=user.getPhone_no() %></p>
 <p>Email:<%=user.getEmail() %></p>
@@ -59,7 +63,7 @@ out.print(user.getUsername());
      <td><%=account.getBank_name() %></td>
      <td><%=account.getIFSC_code() %></td>
      <td><%=account.getAccount_type() %></td>
-     <td><%=account.getCurrent_balance() %></td>
+     <td><%out.print(account.getCurrent_balance()); %></td>
      <td>last_txn_date</td></tr>
 <% } %>
      </tbody>
@@ -77,26 +81,11 @@ out.print(user.getUsername());
     <button style="width:25%"class="AllBtn" onclick="requestSendMoney()">Send Money</button>
 </div>
 
+ <% }%>
 
 
 
 
-<script>
-    function requestStatement() {
-        // Add logic for handling statement request
-    }
-
-    function requestAddMoney() {
-        // Add logic for handling add money request
-    }
-
-    function requestSendMoney() {
-        // Add logic for handling send money request
-    }
-    function requestlogout() {
-        window.location.href="login.jsp";
-    }
-</script>
 
 </body>
 </html>

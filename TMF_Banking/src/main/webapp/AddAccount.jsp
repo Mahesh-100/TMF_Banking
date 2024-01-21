@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ page import="dto.UserDTO" %>  
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Add Account Form</title>
 <link rel="stylesheet" href="styles.css">
+<script type="text/javascript" src="Script.js"></script>
+
 </head>
 <body>
 <header>
@@ -15,12 +18,20 @@
 <div>
 <button style="width:10%" class="logout" onclick="requestlogout();">Logout</button>
 </div>
+<% UserDTO user=(UserDTO)session.getAttribute("user");
+   if(user==null) {
+	   response.sendRedirect("login.jsp");
+   }else{%>
 <div class="container">
 <div class="form-box">
 <h2>Bank Account Form</h2>
-<%HttpSession Session=request.getSession();
-session.getAttribute("user");%>
+
 <form action="http://localhost:8082/TMF_Banking/AddAccount" method="post">
+	
+ 
+   <h3>Welcome <%out.print(user.getUsername());%>
+</h3>
+
     <label for="accountNumber">Account Number:</label>
     <input type="text" id="accountNumber" name="accountNumber" required>
 
@@ -45,10 +56,6 @@ session.getAttribute("user");%>
 </form>
 </div>
 </div>
-<script type="text/javascript">
-function requestlogout() {
-    window.location.href="login.jsp";
-}
-</script>
+<% }%>
 </body>
 </html>

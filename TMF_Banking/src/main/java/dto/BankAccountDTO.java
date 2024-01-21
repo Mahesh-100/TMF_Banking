@@ -1,13 +1,13 @@
 package dto;
 public class BankAccountDTO {
 	 
-	private int account_id;
+	
 	private String username;
 	private String account_no;
 	private String bank_name;
 	private String IFSC_code;
 	private String account_type;
-	private String current_balance;
+	private double current_balance;
 	
 	
 	public BankAccountDTO() {
@@ -15,7 +15,7 @@ public class BankAccountDTO {
 		// TODO Auto-generated constructor stub
 	}
 	public BankAccountDTO(String username, String account_no, String bank_name, String iFSC_code, String account_type,
-			String current_balance) {
+			double current_balance) {
 		super();
 		this.username = username;
 		this.account_no = account_no;
@@ -24,12 +24,7 @@ public class BankAccountDTO {
 		this.account_type = account_type;
 		this.current_balance = current_balance;
 	}
-	public int getAccount_id() {
-		return account_id;
-	}
-	public void setAccount_id(int account_id) {
-		this.account_id = account_id;
-	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -60,10 +55,10 @@ public class BankAccountDTO {
 	public void setAccount_type(String account_type) {
 		this.account_type = account_type;
 	}
-	public String getCurrent_balance() {
+	public double getCurrent_balance() {
 		return current_balance;
 	}
-	public void setCurrent_balance(String current_balance) {
+	public void setCurrent_balance(double current_balance) {
 		this.current_balance = current_balance;
 	}
 	
