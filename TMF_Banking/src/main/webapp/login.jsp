@@ -10,8 +10,8 @@
 </head>
 <body>
 <header>
-        <img src="company-logo.png" alt="Company Logo">
-        <h1>Company Name</h1>
+        <img src="C:/Users/bharg/OneDrive/Pictures/Screenshots/logo.jp" >
+        <h1>DigiPurse</h1>
     </header>
 
     <div class="container">

@@ -87,7 +87,26 @@ public class BankDao {
 	}
 }
 	
+	public boolean insertBankAccount(BankAccountDTO bank) throws SQLException  {
+		try (Connection connection = DBConnection.getConnection()){
+			String sql = "INSERT INTO bank_account (username, bank_account_no, bank_name, IFSC_code, account_type, current_balance) VALUES (?, ?, ?, ?, ?, ?)";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, bank.getUsername() );
+            preparedStatement.setString(2, bank.getAccount_no() );
+            preparedStatement.setString(3, bank.getBank_name());
+            preparedStatement.setString(4, bank.getIFSC_code());
+            preparedStatement.setString(5, bank.getAccount_type());
+            preparedStatement.setDouble(6, bank.getCurrent_balance());
 
+            int rowsAffected=preparedStatement.executeUpdate();
+            return rowsAffected>0;
+        } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+}
 	
 }
 	

@@ -15,5 +15,5 @@ function requestSendMoney() {
 	window.location.href = "SendMoney.jsp";
 }
 function requestlogout() {
-	window.location.href = "login.jsp";
+	window.location.href = "logout.jsp";
 }

@@ -26,12 +26,12 @@
 <div class="form-box">
 <h2>Bank Account Form</h2>
 
-<form action="http://localhost:8082/TMF_Banking/AddAccount" method="post">
+<form action="http://localhost:8082/TMF_Banking/AccountServlet" method="post">
 	
  
    <h3>Welcome <%out.print(user.getUsername());%>
 </h3>
-
+     <input type="hidden" name="username" value="<%user.getUsername(); %>">
     <label for="accountNumber">Account Number:</label>
     <input type="text" id="accountNumber" name="accountNumber" required>
 
