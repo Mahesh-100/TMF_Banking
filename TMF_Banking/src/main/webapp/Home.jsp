@@ -17,7 +17,7 @@
 <body>
 <header>
         <img src="company-logo.png" alt="Company Logo">
-        <h1>TMF Banking</h1>
+        <h1>MyDigiPurse</h1>
 </header>
 <div>
 <button style="width:10%" class="logout" onclick="requestlogout();">Logout</button>
@@ -28,7 +28,7 @@
    }else{%>
  <div class="userDetails">
 
- <h2><% out.print(user.getUsername());%>
+ <h2>Welcome <% out.print(user.getUsername());%>
 </h2>
    
 <p>Full Name:<%out.print(user.getUser_fullname()); %></p>
@@ -36,12 +36,12 @@
 <p>Email:<%=user.getEmail() %></p>
 <p>Address:<%=user.getAddress() %></p>
 </div>
-
+    
 <div class="accountsList">
  <a href="AddAccount.jsp" class="AllBtn" style="float: right; margin-right: 20px;"  >Add Account</a>
     <!-- Display accounts in radio buttons here -->
      <h2>Accounts</h2>
-    
+
      <% ArrayList<BankAccountDTO> banklist=(ArrayList<BankAccountDTO>)request.getAttribute("accounts");%>
      <table class="Bank-table">
      <thead>
@@ -55,6 +55,7 @@
      <th>Last transaction</th>
      </tr>
      </thead>
+    
      <tbody>
      <%for (BankAccountDTO account : banklist) { %>
      <tr>
@@ -76,14 +77,18 @@
                 
 <div class="transactions">
     <!-- Buttons for transaction requests -->
-    <button style="width:25%" class="AllBtn" onclick="requestStatement()"> Statement</button>
-    <button style="width:25%"class="AllBtn" onclick="requestAddMoney()"> Add Money</button>
-    <button style="width:25%"class="AllBtn" onclick="requestSendMoney()">Send Money</button>
+    <button  style="width:25%" class="AllBtn" onclick="requestStatement()"> Statement</button>
+    
+    <button  style="width:25%"class="AllBtn" onclick="requestAddMoney()"> Add Money</button>
+     
+    <button  style ="width:25%" class="AllBtn" onclick="requestSendMoney()">Send Money</button>
+       <!-- <a href="SendMoney.jsp" class="AllBtn"   >Send Money</a>
+     <a href="Statement.jsp" class="AllBtn"   >Statement</a>
+     <a href="AddMoney.jsp" class="AllBtn"   >Add Money</a>-->
 </div>
 
  <% }%>
-
-
+   
 
 
 

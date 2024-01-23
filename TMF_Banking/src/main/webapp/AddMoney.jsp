@@ -13,7 +13,7 @@
 <body>
 <header>
         <img src="company-logo.png" alt="Company Logo">
-        <h1>TMF Banking</h1>
+        <h1>MyDigiPurse</h1>
     </header>
 <div>
 <button style="width:10%" class="logout" onclick="requestlogout();">Logout</button>
@@ -30,7 +30,7 @@
  
    <h3>Welcome <%out.print(user.getUsername());%>
 </h3>
-<form action="ProcessAddMoneyServlet" method="post">
+<form action="http://localhost:8082/TMF_Banking/AddMoneyServlet" method="post">
     <label for="amount">Amount to Add:</label>
     <input type="number" id="amount" name="amount" required>
 

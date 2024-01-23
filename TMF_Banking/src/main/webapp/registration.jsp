@@ -10,7 +10,7 @@
 <body>
 <header>
         <img src="company-logo.png" alt="Company Logo">
-        <h1>Company Name</h1>
+        <h1>MyDigiPurse</h1>
     </header>
 
     <div class="container">
