@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ page import="dto.UserDTO" %>
+    <%@ page import="dto.BankAccountDTO" %>
+<%@ page import="java.util.ArrayList" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,12 +33,15 @@
  
    <h3>Welcome <%out.print(user.getUsername());%>
 </h3>
-<form action="http://localhost:8082/TMF_Banking/AddMoneyServlet" method="post">
+<form  id="addMoneyForm" action="http://localhost:8082/TMF_Banking/AddMoneyServlet" method="post">
+     
+	<input type="hidden" name="accountNumber" value="<%=request.getAttribute("accountNumber") %>">
     <label for="amount">Amount to Add:</label>
     <input type="number" id="amount" name="amount" required>
 
-    <button type="submit">Add Money</button>
+    <button type="submit" >Add Money</button>
 </form>
+
 </div>
  </div>
  <% }%>

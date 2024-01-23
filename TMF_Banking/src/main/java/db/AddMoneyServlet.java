@@ -22,7 +22,7 @@ public class AddMoneyServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		String selectedAccountNumber=request.getParameter("selectedAccount");
+		String selectedAccountNumber=request.getParameter("accountNumber");
 		double amountToAdd=Double.parseDouble(request.getParameter("amount"));
 		
 		PrintWriter out=response.getWriter();
