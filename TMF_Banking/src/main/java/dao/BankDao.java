@@ -107,6 +107,23 @@ public class BankDao {
 		return false;
 	}
 }
+	public boolean addMoney(String accountNumber,double amountToAdd) throws SQLException {
+		try (Connection connection = DBConnection.getConnection()){
+			String sql="UPDATE bank_account SET current_balance = current_balance + ? WHERE bank_account_no = ?";
+			
+			try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+				preparedStatement.setDouble(1, amountToAdd);
+	            preparedStatement.setString(2, accountNumber);
+				
+	            int rowsAffected = preparedStatement.executeUpdate();
+	            return rowsAffected > 0; 
+			}catch (SQLException e) {
+	            e.printStackTrace(); 
+	            return false;
+		}
+	
+	}
+	}
 	
 }
 	
@@ -116,6 +133,6 @@ public class BankDao {
 	
 		
 	
-	
+
 	
 
