@@ -15,9 +15,7 @@
         <img src="company-logo.png" alt="Company Logo">
         <h1>MyDigiPurse</h1>
     </header>
-<div>
-<button style="width:10%" class="logout" onclick="requestlogout();">Logout</button>
-</div>
+
 <% UserDTO user=(UserDTO)session.getAttribute("user");
    if(user==null) {
 	   response.sendRedirect("login.jsp");
@@ -29,7 +27,8 @@
  
    <h3>Welcome <%out.print(user.getUsername());%>
 </h3>
-<form action="ProcessSendMoneyServlet" method="post">
+<form action="http://localhost:8082/TMF_Banking/SendMoneyServlet" method="post">
+	<input type="hidden" name="fromAccountNumber" value="<%=request.getAttribute("accountNumber") %>">
     <label for="recipientName">Recipient's Name:</label>
     <input type="text" id="recipientName" name="recipientName" required>
 
@@ -44,5 +43,8 @@
 </div>
  </div>
  <% }%>
+ <div>
+<button style="width:10%" class="logout" onclick="requestlogout()">Logout</button>
+</div>
 </body>
 </html>

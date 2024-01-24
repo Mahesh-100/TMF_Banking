@@ -21,9 +21,7 @@
         <img src="company-logo.png" alt="Company Logo">
         <h1>MyDigiPurse</h1>
 </header>
-<div>
-<button style="width:10%" class="logout" onclick="requestlogout();">Logout</button>
-</div>
+
 
 <% UserDTO user=(UserDTO)session.getAttribute("user");
    if(user==null) {
@@ -95,7 +93,9 @@
  <% }%>
    
 </form>
-
+<div>
+<button style="width:10%" class="logout" onclick="requestlogout()">Logout</button>
+</div>
 
 </body>
 </html>

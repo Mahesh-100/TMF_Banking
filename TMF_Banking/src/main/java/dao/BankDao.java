@@ -125,6 +125,41 @@ public class BankDao {
 	}
 	}
 	
+	
+	public boolean sendMoney(String fromAccountNumber,String toAccountNumber,double amountToSend) throws SQLException   {
+		try(Connection connection = DBConnection.getConnection()){
+			String sqlDebit="UPDATE bank_account SET current_balance = current_balance - ? WHERE bank_account_no = ?";
+			String sqlCredit="UPDATE bank_account SET current_balance = current_balance + ? WHERE bank_account_no =?";
+		         
+			try(PreparedStatement debitstatement=connection.prepareStatement(sqlDebit);
+				PreparedStatement creditStatement=connection.prepareStatement(sqlCredit)){
+				
+				connection.setAutoCommit(false);
+				
+				debitstatement.setDouble(1,amountToSend);
+				debitstatement.setString(2, fromAccountNumber);
+				debitstatement.executeUpdate();
+				
+				creditStatement.setDouble(1,amountToSend);
+				creditStatement.setString(2, toAccountNumber);
+				creditStatement.executeUpdate();
+				
+				connection.commit();
+				return true;
+			}catch (SQLException e) {
+	            try {
+	                if (connection != null) {
+	                    connection.rollback();
+	                }
+	            } catch (SQLException rollbackException) {
+	                rollbackException.printStackTrace();
+	            }
+	            e.printStackTrace();
+	            return false;
+	        }
+        } 
+    }
+	
 }
 	
 	

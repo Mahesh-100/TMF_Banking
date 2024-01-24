@@ -43,10 +43,12 @@ public class ButtonServlet extends HttpServlet {
             	rd.forward(request, response);
 		    } else if ("Statement".equals(selectedAction)) {
 		        // Handle Request Statement action
-		        response.sendRedirect("Statement.jsp");
+		    	RequestDispatcher rd=request.getRequestDispatcher("Statement.jsp");
+            	rd.forward(request, response);
 		    }else if ("SendMoney".equals(selectedAction)) {
 		        // Handle Request Statement action
-		        response.sendRedirect("SendMoney.jsp");
+		    	RequestDispatcher rd=request.getRequestDispatcher("SendMoney.jsp");
+            	rd.forward(request, response);
 		    }
 		    else {
 		    	PrintWriter out=response.getWriter();
