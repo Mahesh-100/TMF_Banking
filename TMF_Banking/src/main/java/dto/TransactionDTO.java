@@ -3,20 +3,38 @@ package dto;
 import java.time.LocalDateTime;
 
 public class TransactionDTO {
-	private String txnId;
-    private LocalDateTime txnDateTime;
+	
+
+
+	private LocalDateTime txnDateTime;
     private double txnAmount;
     private String txnType;
     private String txnStatus;
-    private String sourceAcctId;
-    private String targetAcctId;
-	public String getTxnId() {
+    private int sourceAcctId;
+    private int targetAcctId;
+	
+    
+    private int txnId;
+    public int getTxnId() {
 		return txnId;
 	}
-	public void setTxnId(String txnId) {
+	public void setTxnId(int txnId) {
 		this.txnId = txnId;
 	}
-	public LocalDateTime getTxnDateTime() {
+	public int getSourceAcctId() {
+		return sourceAcctId;
+	}
+	public void setSourceAcctId(int sourceAcctId) {
+		this.sourceAcctId = sourceAcctId;
+	}
+	public int getTargetAcctId() {
+		return targetAcctId;
+	}
+	public void setTargetAcctId(int targetAcctId) {
+		this.targetAcctId = targetAcctId;
+	}
+    
+    public LocalDateTime getTxnDateTime() {
 		return txnDateTime;
 	}
 	public void setTxnDateTime(LocalDateTime txnDateTime) {
@@ -40,20 +58,18 @@ public class TransactionDTO {
 	public void setTxnStatus(String txnStatus) {
 		this.txnStatus = txnStatus;
 	}
-	public String getSourceAcctId() {
-		return sourceAcctId;
-	}
-	public void setSourceAcctId(String sourceAcctId) {
-		this.sourceAcctId = sourceAcctId;
-	}
-	public String getTargetAcctId() {
-		return targetAcctId;
-	}
-	public void setTargetAcctId(String targetAcctId) {
-		this.targetAcctId = targetAcctId;
-	}
+	
     
-    
-    
+	public String toString() {
+        return "Transaction{" +
+                "txnId='" + txnId + '\'' +
+                ", txnDateTime=" + txnDateTime +
+                ", txnAmount=" + txnAmount +
+                ", txnType='" + txnType + '\'' +
+                ", txnStatus='" + txnStatus + '\'' +
+                ", sourceAcctId='" + sourceAcctId + '\'' +
+                ", targetAcctId='" + targetAcctId + '\'' +
+                '}'; 
+	}
 
 }

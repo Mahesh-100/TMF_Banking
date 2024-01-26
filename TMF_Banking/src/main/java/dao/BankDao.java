@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import db.DBConnection;
 import dto.BankAccountDTO;
+import dto.TransactionDTO;
 import dto.UserDTO;
 
 public class BankDao {
@@ -107,12 +108,12 @@ public class BankDao {
 		return false;
 	}
 }
-	public boolean addMoney(String accountNumber,double amountToAdd) throws SQLException {
+	public boolean addMoney(String accountNumber,double amount) throws SQLException {
 		try (Connection connection = DBConnection.getConnection()){
 			String sql="UPDATE bank_account SET current_balance = current_balance + ? WHERE bank_account_no = ?";
 			
 			try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-				preparedStatement.setDouble(1, amountToAdd);
+				preparedStatement.setDouble(1, amount);
 	            preparedStatement.setString(2, accountNumber);
 				
 	            int rowsAffected = preparedStatement.executeUpdate();
@@ -126,7 +127,7 @@ public class BankDao {
 	}
 	
 	
-	public boolean sendMoney(String fromAccountNumber,String toAccountNumber,double amountToSend) throws SQLException   {
+	public boolean sendMoney(String fromAccountNumber,String toAccountNumber,double amount) throws SQLException   {
 		try(Connection connection = DBConnection.getConnection()){
 			String sqlDebit="UPDATE bank_account SET current_balance = current_balance - ? WHERE bank_account_no = ?";
 			String sqlCredit="UPDATE bank_account SET current_balance = current_balance + ? WHERE bank_account_no =?";
@@ -136,11 +137,11 @@ public class BankDao {
 				
 				connection.setAutoCommit(false);
 				
-				debitstatement.setDouble(1,amountToSend);
+				debitstatement.setDouble(1,amount);
 				debitstatement.setString(2, fromAccountNumber);
 				debitstatement.executeUpdate();
 				
-				creditStatement.setDouble(1,amountToSend);
+				creditStatement.setDouble(1,amount);
 				creditStatement.setString(2, toAccountNumber);
 				creditStatement.executeUpdate();
 				
@@ -160,6 +161,51 @@ public class BankDao {
         } 
     }
 	
+	
+//	public boolean insertTransactionDTO(TransactionDTO txn) throws SQLException  {
+//		try (Connection connection = DBConnection.getConnection()){
+//			String sql = "INSERT INTO user_info (username, password, user_fullname, phone_no, email, user_address) VALUES (?, ?, ?, ?, ?, ?)";
+//		try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+//            preparedStatement.setString(1, txn.);
+//            preparedStatement.setString(2, );
+//            preparedStatement.setString(3, ));
+//            preparedStatement.setString(4, );
+//            preparedStatement.setString(5, );
+//            preparedStatement.setString(6, );
+//
+//            int rowsAffected=preparedStatement.executeUpdate();
+//            return rowsAffected>0;
+//        } catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return false;
+//	}
+//}
+	
+
+	public boolean insertTransaction(TransactionDTO transaction) {
+        String sql = "INSERT INTO transactions (txnDateTime, txnAmount, txnType, txnStatus, sourceAcctId, targetAcctId) " +
+                     "VALUES (?, ?, ?, ?, ?, ?)";
+        try(Connection connection = DBConnection.getConnection();
+        	PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        	preparedStatement.setTimestamp(1, java.sql.Timestamp.valueOf(transaction.getTxnDateTime()));
+            preparedStatement.setDouble(2, transaction.getTxnAmount());
+            preparedStatement.setString(3, transaction.getTxnType());
+            preparedStatement.setString(4, transaction.getTxnStatus());
+            preparedStatement.setInt(5, transaction.getSourceAcctId());
+            preparedStatement.setInt(6, transaction.getTargetAcctId());
+            
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
+        	
+        } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+        
+}
 }
 	
 	

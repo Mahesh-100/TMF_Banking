@@ -33,11 +33,16 @@ public class AddMoneyServlet extends HttpServlet {
 		UserDTO user=(UserDTO)session.getAttribute("user");
 		String username=user.getUsername();
 		String selectedAccountNumber=request.getParameter("accountNumber");
-		double amountToAdd=Double.parseDouble(request.getParameter("amount"));
+		double amount=Double.parseDouble(request.getParameter("amount"));
+		
+		
+		request.setAttribute("amount", amount);
+		request.setAttribute("Deposit", "Deposit");
+		
 		
 		 BankDao dao=new BankDao();
 		try {
-			boolean updateSuccess= dao.addMoney(selectedAccountNumber, amountToAdd);
+			boolean updateSuccess= dao.addMoney(selectedAccountNumber, amount);
 			if (updateSuccess) {
 				ArrayList<BankAccountDTO> banklist=dao.getAllAccountDetails(username);
 				request.setAttribute("accounts", banklist);

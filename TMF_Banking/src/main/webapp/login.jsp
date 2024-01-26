@@ -11,7 +11,7 @@
 <body>
 <header>
         <img src="logo.jpg" alt="Company Logo">
-        <h1>MyDigiPusrse</h1>
+        <h1>MyDigiPurse</h1>
     </header>
 
     <div class="container">

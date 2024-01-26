@@ -42,12 +42,15 @@ public class SendMoneyServlet extends HttpServlet {
 			String fromAccountNumber=request.getParameter("fromAccountNumber");
 			String toAccountNumber=request.getParameter("recipientAccount");
 //			String recipientName=request.getParameter("recipientName");
-			double amountToSend = Double.parseDouble(request.getParameter("amount"));
+			double amount = Double.parseDouble(request.getParameter("amount"));
+			
+			request.setAttribute("amount", amount);
+			request.setAttribute("send", "sent");
 			BankDao dao=new BankDao();
 			
 			boolean sendMoneySuccess;
 			try {
-				sendMoneySuccess = dao.sendMoney(fromAccountNumber, toAccountNumber, amountToSend);
+				sendMoneySuccess = dao.sendMoney(fromAccountNumber, toAccountNumber, amount);
 				if (sendMoneySuccess) {
 					ArrayList<BankAccountDTO> banklist=dao.getAllAccountDetails(username);
 					request.setAttribute("accounts", banklist);
