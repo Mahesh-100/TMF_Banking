@@ -1,4 +1,4 @@
-Bank application
+#Bank application:
 Data base name: bank_customers
 user_info table:
 CREATE TABLE UserTable (
