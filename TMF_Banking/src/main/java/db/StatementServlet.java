@@ -35,9 +35,9 @@ public class StatementServlet extends HttpServlet {
 		LocalDateTime transactionDateTime = LocalDateTime.now();
 	    double amount = 89;
 	    String type = "send";
-	    String status = "COMPLETED"; // or any other status
-	    int sourceAccountId = 2; // Replace with actual source account ID
-	    int targetAccountId = 3; // Replace with actual target account ID
+	    String status = "COMPLETED"; 
+	    int sourceAccountId = 2; 
+	    int targetAccountId = 3; 
 	    
 	    
 	    TransactionDTO transaction = new TransactionDTO();

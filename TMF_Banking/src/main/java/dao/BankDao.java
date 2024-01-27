@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
 import db.DBConnection;
 import dto.BankAccountDTO;
 import dto.TransactionDTO;
@@ -162,27 +164,7 @@ public class BankDao {
     }
 	
 	
-//	public boolean insertTransactionDTO(TransactionDTO txn) throws SQLException  {
-//		try (Connection connection = DBConnection.getConnection()){
-//			String sql = "INSERT INTO user_info (username, password, user_fullname, phone_no, email, user_address) VALUES (?, ?, ?, ?, ?, ?)";
-//		try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-//            preparedStatement.setString(1, txn.);
-//            preparedStatement.setString(2, );
-//            preparedStatement.setString(3, ));
-//            preparedStatement.setString(4, );
-//            preparedStatement.setString(5, );
-//            preparedStatement.setString(6, );
-//
-//            int rowsAffected=preparedStatement.executeUpdate();
-//            return rowsAffected>0;
-//        } catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return false;
-//	}
-//}
-	
+
 
 	public boolean insertTransaction(TransactionDTO transaction) {
         String sql = "INSERT INTO transactions (txnDateTime, txnAmount, txnType, txnStatus, sourceAcctId, targetAcctId) " +
@@ -206,10 +188,49 @@ public class BankDao {
 		return false;
         
 }
+	
+	
+	
+	public List<TransactionDTO> getTransactionsByAccount(String accountId) {
+        String sql = "SELECT txnId, txnDateTime, txnAmount, txnType, txnStatus, sourceAcctId, targetAcctId " +
+                     "FROM transactions " +
+                     "WHERE (txnType = 'ADD' AND sourceAcctId = ?) " +
+                     "      OR " +
+                     "      (txnType = 'SEND' AND (sourceAcctId = ? OR targetAcctId = ?)) " +
+                     "ORDER BY txnDateTime DESC";
+
+        List<TransactionDTO> transactions = new ArrayList<>();
+        try (
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)
+            ) {
+                preparedStatement.setString(1, accountId);
+                preparedStatement.setString(2, accountId);
+                preparedStatement.setString(3, accountId);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        TransactionDTO transaction = new TransactionDTO();
+                        transaction.setTxnId(resultSet.getInt("txnId"));
+                        transaction.setTxnDateTime(resultSet.getTimestamp("txnDateTime").toLocalDateTime());
+                        transaction.setTxnAmount(resultSet.getDouble("txnAmount"));
+                        transaction.setTxnType(resultSet.getString("txnType"));
+                        transaction.setTxnStatus(resultSet.getString("txnStatus"));
+                        transaction.setSourceAcctId(resultSet.getInt("sourceAcctId"));
+                        transaction.setTargetAcctId(resultSet.getInt("targetAcctId"));
+
+                        transactions.add(transaction);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace(); // Handle the exception appropriately in your application
+            }
+
+            return transactions;
 }
 	
 	
-	
+}	
 	
 	
 		
