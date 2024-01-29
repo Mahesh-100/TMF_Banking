@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import dao.BankDao;
 import dto.BankAccountDTO;
+import dto.TransactionDTO;
 import dto.UserDTO;
 
 
@@ -32,18 +33,21 @@ public class AddMoneyServlet extends HttpServlet {
 		HttpSession session=request.getSession();
 		UserDTO user=(UserDTO)session.getAttribute("user");
 		String username=user.getUsername();
+		
 		String selectedAccountNumber=request.getParameter("accountNumber");
+		int accountID = Integer.parseInt(request.getParameter("accountID"));
 		double amount=Double.parseDouble(request.getParameter("amount"));
 		
-		
-		request.setAttribute("amount", amount);
-		request.setAttribute("Deposit", "Deposit");
-		
-		
-		 BankDao dao=new BankDao();
+		BankDao dao=new BankDao();
+	
+		TransactionDTO transaction=new TransactionDTO(accountID,accountID,amount,"add");
+	 
 		try {
-			boolean updateSuccess= dao.addMoney(selectedAccountNumber, amount);
-			if (updateSuccess) {
+			double currentBalance=dao.getBalance(selectedAccountNumber);
+			double newBalance=currentBalance+amount;
+			boolean updateSuccess= dao.updateBalance(selectedAccountNumber, newBalance);
+			boolean TransactionSuccess=dao.logTransaction(transaction);
+			if (updateSuccess &&TransactionSuccess) {
 				ArrayList<BankAccountDTO> banklist=dao.getAllAccountDetails(username);
 				request.setAttribute("accounts", banklist);
             	RequestDispatcher rd=request.getRequestDispatcher("Home.jsp");
@@ -58,5 +62,8 @@ public class AddMoneyServlet extends HttpServlet {
 		}
 		
 	}
+
+
+	
 
 }

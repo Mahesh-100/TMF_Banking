@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import dao.BankDao;
 import dto.BankAccountDTO;
+import dto.TransactionDTO;
 import dto.UserDTO;
 
 /**
@@ -38,20 +39,36 @@ public class SendMoneyServlet extends HttpServlet {
 			UserDTO user=(UserDTO)session.getAttribute("user");
 			String username=user.getUsername();
 		
-		
-			String fromAccountNumber=request.getParameter("fromAccountNumber");
+			
+			int sourceaccountID = Integer.parseInt(request.getParameter("accountID"));
+			String fromAccountNumber =request.getParameter("fromAccountNumber");
+			double amount=Double.parseDouble(request.getParameter("amount"));
 			String toAccountNumber=request.getParameter("recipientAccount");
 //			String recipientName=request.getParameter("recipientName");
-			double amount = Double.parseDouble(request.getParameter("amount"));
 			
-			request.setAttribute("amount", amount);
-			request.setAttribute("send", "sent");
+
 			BankDao dao=new BankDao();
+			int targetAccountID;
 			
-			boolean sendMoneySuccess;
+			
 			try {
-				sendMoneySuccess = dao.sendMoney(fromAccountNumber, toAccountNumber, amount);
-				if (sendMoneySuccess) {
+				
+				targetAccountID = dao.getAccountID(toAccountNumber);
+				TransactionDTO transactionOfSource=new TransactionDTO(sourceaccountID,targetAccountID,amount,"debit");
+				TransactionDTO transactionOfTarget=new TransactionDTO(targetAccountID,sourceaccountID,amount,"credit");
+				double sourceBalance = dao.getBalance(fromAccountNumber);
+		        double newSourceBalance = sourceBalance - amount;
+		        boolean updateSourceBalance=dao.updateBalance(fromAccountNumber, newSourceBalance);
+
+		        double targetBalance = dao.getBalance(toAccountNumber);
+		        double newTargetBalance = targetBalance + amount;
+		        boolean updateTargetBalance=dao.updateBalance(toAccountNumber, newTargetBalance);
+				
+		        boolean sourceTransaction=dao.logTransaction(transactionOfSource);
+		        boolean targetTransaction=dao.logTransaction(transactionOfTarget);
+		        
+		     
+				if (updateSourceBalance && updateTargetBalance&&sourceTransaction&&targetTransaction) {
 					ArrayList<BankAccountDTO> banklist=dao.getAllAccountDetails(username);
 					request.setAttribute("accounts", banklist);
 	            	RequestDispatcher rd=request.getRequestDispatcher("Home.jsp");
@@ -65,7 +82,7 @@ public class SendMoneyServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 
-	        // Redirect back to the home page or another appropriate page based on the send money result
+	        
 	        
 	}
 

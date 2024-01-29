@@ -34,6 +34,7 @@
 <form  id="addMoneyForm" action="http://localhost:8082/TMF_Banking/AddMoneyServlet" method="post">
      
 	<input type="hidden" name="accountNumber" value="<%=request.getAttribute("accountNumber") %>">
+	<input type="hidden" name="accountID" value="<%=request.getAttribute("accountID") %>">
     <label for="amount">Amount to Add:</label>
     <input type="number" id="amount" name="amount" required>
 

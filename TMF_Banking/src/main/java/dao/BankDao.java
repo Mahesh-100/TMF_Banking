@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
 import db.DBConnection;
 import dto.BankAccountDTO;
 import dto.TransactionDTO;
@@ -23,6 +21,7 @@ public class BankDao {
 				ResultSet rs=preparedStatement.executeQuery();
 				while(rs.next()) {
 					BankAccountDTO bankDao=new BankAccountDTO();
+					bankDao.setAccountID(rs.getInt("accountID"));
 					bankDao.setAccount_no(rs.getString("bank_account_no"));
 					bankDao.setBank_name(rs.getString("bank_name"));
 					bankDao.setIFSC_code(rs.getString("IFSC_code"));
@@ -110,13 +109,53 @@ public class BankDao {
 		return false;
 	}
 }
-	public boolean addMoney(String accountNumber,double amount) throws SQLException {
+	
+    public  double getBalance(String selectedAccountNumber) throws SQLException {
+        double balance = 0.0;
+        try (Connection connection = DBConnection.getConnection()){;
+        	String sql="SELECT current_balance FROM bank_account WHERE bank_account_no = ?";
+          try(PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, selectedAccountNumber);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    balance = resultSet.getDouble("current_balance");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return balance;
+    }
+    }	
+	
+    public  int getAccountID(String selectedAccountNumber) throws SQLException {
+        int accountID = 0;
+        try (Connection connection = DBConnection.getConnection()){;
+        	String sql="SELECT accountID FROM bank_account WHERE bank_account_no = ?";
+          try(PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, selectedAccountNumber);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                	accountID = resultSet.getInt("accountID");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return accountID;
+    }
+    }
+	
+	
+	
+	public boolean updateBalance(String selectedAccountNumber,double newBalance) throws SQLException {
 		try (Connection connection = DBConnection.getConnection()){
-			String sql="UPDATE bank_account SET current_balance = current_balance + ? WHERE bank_account_no = ?";
+			String sql="UPDATE bank_account SET current_balance =? WHERE  bank_account_no=?";
 			
 			try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-				preparedStatement.setDouble(1, amount);
-	            preparedStatement.setString(2, accountNumber);
+				preparedStatement.setDouble(1, newBalance);
+	            preparedStatement.setString(2, selectedAccountNumber);
+	           
 				
 	            int rowsAffected = preparedStatement.executeUpdate();
 	            return rowsAffected > 0; 
@@ -166,18 +205,18 @@ public class BankDao {
 	
 
 
-	public boolean insertTransaction(TransactionDTO transaction) {
-        String sql = "INSERT INTO transactions (txnDateTime, txnAmount, txnType, txnStatus, sourceAcctId, targetAcctId) " +
-                     "VALUES (?, ?, ?, ?, ?, ?)";
+	public boolean logTransaction(TransactionDTO transaction) {
+        String sql = "INSERT INTO transactions (sourceAcctID, targetAcctID, amount, transactionType) " +
+                     "VALUES (?, ?, ?, ?)";
         try(Connection connection = DBConnection.getConnection();
         	PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-        	preparedStatement.setTimestamp(1, java.sql.Timestamp.valueOf(transaction.getTxnDateTime()));
-            preparedStatement.setDouble(2, transaction.getTxnAmount());
-            preparedStatement.setString(3, transaction.getTxnType());
-            preparedStatement.setString(4, transaction.getTxnStatus());
-            preparedStatement.setInt(5, transaction.getSourceAcctId());
-            preparedStatement.setInt(6, transaction.getTargetAcctId());
-            
+        	preparedStatement.setInt(1, transaction.getSourceAcctID());
+            preparedStatement.setInt(2, transaction.getTargetAcctID());
+            preparedStatement.setDouble(3, transaction.getAmount());
+            preparedStatement.setString(4, transaction.getTransactionType());
+        
+           
+      
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0;
         	
@@ -187,47 +226,13 @@ public class BankDao {
 		}
 		return false;
         
+		
+		
 }
 	
 	
 	
-	public List<TransactionDTO> getTransactionsByAccount(String accountId) {
-        String sql = "SELECT txnId, txnDateTime, txnAmount, txnType, txnStatus, sourceAcctId, targetAcctId " +
-                     "FROM transactions " +
-                     "WHERE (txnType = 'ADD' AND sourceAcctId = ?) " +
-                     "      OR " +
-                     "      (txnType = 'SEND' AND (sourceAcctId = ? OR targetAcctId = ?)) " +
-                     "ORDER BY txnDateTime DESC";
-
-        List<TransactionDTO> transactions = new ArrayList<>();
-        try (
-                Connection connection = DBConnection.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(sql)
-            ) {
-                preparedStatement.setString(1, accountId);
-                preparedStatement.setString(2, accountId);
-                preparedStatement.setString(3, accountId);
-
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        TransactionDTO transaction = new TransactionDTO();
-                        transaction.setTxnId(resultSet.getInt("txnId"));
-                        transaction.setTxnDateTime(resultSet.getTimestamp("txnDateTime").toLocalDateTime());
-                        transaction.setTxnAmount(resultSet.getDouble("txnAmount"));
-                        transaction.setTxnType(resultSet.getString("txnType"));
-                        transaction.setTxnStatus(resultSet.getString("txnStatus"));
-                        transaction.setSourceAcctId(resultSet.getInt("sourceAcctId"));
-                        transaction.setTargetAcctId(resultSet.getInt("targetAcctId"));
-
-                        transactions.add(transaction);
-                    }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace(); // Handle the exception appropriately in your application
-            }
-
-            return transactions;
-}
+	
 	
 	
 }	

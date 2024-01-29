@@ -29,6 +29,7 @@
 </h3>
 <form action="http://localhost:8082/TMF_Banking/SendMoneyServlet" method="post">
 	<input type="hidden" name="fromAccountNumber" value="<%=request.getAttribute("accountNumber") %>">
+	<input type="hidden" name="accountID" value="<%=request.getAttribute("accountID") %>">
     <label for="recipientName">Recipient's Name:</label>
     <input type="text" id="recipientName" name="recipientName" required>
 

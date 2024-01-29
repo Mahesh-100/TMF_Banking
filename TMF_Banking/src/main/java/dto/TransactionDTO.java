@@ -1,75 +1,64 @@
 package dto;
 
-import java.time.LocalDateTime;
-
 public class TransactionDTO {
+	private int transactionID;
+	private int sourceAcctID;
+    private int targetAcctID;
+    private double amount;
+    private String transactionType;
 	
 
+    public TransactionDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+    
+ 
+	public TransactionDTO(int sourceAcctID, int targetAcctID, double amount, String transactionType) {
+		super();
+		this.sourceAcctID = sourceAcctID;
+		this.targetAcctID = targetAcctID;
+		this.amount = amount;
+		this.transactionType = transactionType;
+	}
 
-	private LocalDateTime txnDateTime;
-    private double txnAmount;
-    private String txnType;
-    private String txnStatus;
-    private int sourceAcctId;
-    private int targetAcctId;
+ 
 	
-    
-    private int txnId;
-    public int getTxnId() {
-		return txnId;
+	public int getTransactionID() {
+		return transactionID;
 	}
-	public void setTxnId(int txnId) {
-		this.txnId = txnId;
-	}
-	public int getSourceAcctId() {
-		return sourceAcctId;
-	}
-	public void setSourceAcctId(int sourceAcctId) {
-		this.sourceAcctId = sourceAcctId;
-	}
-	public int getTargetAcctId() {
-		return targetAcctId;
-	}
-	public void setTargetAcctId(int targetAcctId) {
-		this.targetAcctId = targetAcctId;
-	}
-    
-    public LocalDateTime getTxnDateTime() {
-		return txnDateTime;
-	}
-	public void setTxnDateTime(LocalDateTime txnDateTime) {
-		this.txnDateTime = txnDateTime;
-	}
-	public double getTxnAmount() {
-		return txnAmount;
-	}
-	public void setTxnAmount(double txnAmount) {
-		this.txnAmount = txnAmount;
-	}
-	public String getTxnType() {
-		return txnType;
-	}
-	public void setTxnType(String txnType) {
-		this.txnType = txnType;
-	}
-	public String getTxnStatus() {
-		return txnStatus;
-	}
-	public void setTxnStatus(String txnStatus) {
-		this.txnStatus = txnStatus;
+	public void setTransactionID(int transactionID) {
+		this.transactionID = transactionID;
 	}
 	
-    
-	public String toString() {
-        return "Transaction{" +
-                "txnId='" + txnId + '\'' +
-                ", txnDateTime=" + txnDateTime +
-                ", txnAmount=" + txnAmount +
-                ", txnType='" + txnType + '\'' +
-                ", txnStatus='" + txnStatus + '\'' +
-                ", sourceAcctId='" + sourceAcctId + '\'' +
-                ", targetAcctId='" + targetAcctId + '\'' +
-                '}'; 
+	public int getSourceAcctID() {
+		return sourceAcctID;
 	}
+	public void setSourceAcctID(int sourceAcctID) {
+		this.sourceAcctID = sourceAcctID;
+	}
+	public int getTargetAcctID() {
+		return targetAcctID;
+	}
+	public void setTargetAcctID(int targetAcctID) {
+		this.targetAcctID = targetAcctID;
+	}
+	public double getAmount() {
+		return amount;
+	}
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+	public String getTransactionType() {
+		return transactionType;
+	}
+	public void setTransactionType(String transactionType) {
+		this.transactionType = transactionType;
+	}
+   
+    
+    
+    
+   
 
 }
