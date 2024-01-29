@@ -31,10 +31,12 @@ public class ButtonServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 String selectedAction = request.getParameter("selectedAction");
 		 String accountNumber=request.getParameter("selectedAccount");
+		 String accountID=request.getParameter("accountID");
 		 request.setAttribute("accountNumber", accountNumber);
+		 request.setAttribute("accountID", accountID);
 		 
 //		 PrintWriter out=response.getWriter();
-//		 out.append(accountNumber);
+//		 out.append(accountNumber+""+sourceId);
 		    
 		    if ("AddMoney".equals(selectedAction)) {
 		        // Handle Add Money action

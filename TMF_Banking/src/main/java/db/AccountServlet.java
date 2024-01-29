@@ -43,7 +43,7 @@ public class AccountServlet extends HttpServlet {
 //		out.append(username+" "+accountNumber+" "+bankName+" "+IFSCcode+" "+accountType+" "+currentBalance);
 //		
 		
-		BankAccountDTO bankAccount= new BankAccountDTO(username,accountNumber,bankName,IFSCcode,accountType,currentBalance);
+		BankAccountDTO bankAccount= new BankAccountDTO( username,accountNumber,bankName,IFSCcode,accountType,currentBalance);
         BankDao bankDAO= new BankDao();
         try {
 			if(bankDAO.insertBankAccount(bankAccount)) {
