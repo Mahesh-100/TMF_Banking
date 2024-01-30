@@ -29,7 +29,7 @@
 <h2>Add Money</h2>
 
  
-   <h3>Welcome <%out.print(user.getUsername());%>
+   <h3>Welcome <%out.print(user.getUser_fullname());%>
 </h3>
 <form  id="addMoneyForm" action="http://localhost:8082/TMF_Banking/AddMoneyServlet" method="post">
      
