@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+
 import db.DBConnection;
 import dto.BankAccountDTO;
 import dto.TransactionDTO;
@@ -167,43 +169,6 @@ public class BankDao {
 	}
 	}
 	
-	
-	public boolean sendMoney(String fromAccountNumber,String toAccountNumber,double amount) throws SQLException   {
-		try(Connection connection = DBConnection.getConnection()){
-			String sqlDebit="UPDATE bank_account SET current_balance = current_balance - ? WHERE bank_account_no = ?";
-			String sqlCredit="UPDATE bank_account SET current_balance = current_balance + ? WHERE bank_account_no =?";
-		         
-			try(PreparedStatement debitstatement=connection.prepareStatement(sqlDebit);
-				PreparedStatement creditStatement=connection.prepareStatement(sqlCredit)){
-				
-				connection.setAutoCommit(false);
-				
-				debitstatement.setDouble(1,amount);
-				debitstatement.setString(2, fromAccountNumber);
-				debitstatement.executeUpdate();
-				
-				creditStatement.setDouble(1,amount);
-				creditStatement.setString(2, toAccountNumber);
-				creditStatement.executeUpdate();
-				
-				connection.commit();
-				return true;
-			}catch (SQLException e) {
-	            try {
-	                if (connection != null) {
-	                    connection.rollback();
-	                }
-	            } catch (SQLException rollbackException) {
-	                rollbackException.printStackTrace();
-	            }
-	            e.printStackTrace();
-	            return false;
-	        }
-        } 
-    }
-	
-	
-
 
 	public boolean logTransaction(TransactionDTO transaction) {
         String sql = "INSERT INTO transactions (sourceAcctID, targetAcctID, amount, transactionType) " +
@@ -225,12 +190,40 @@ public class BankDao {
 			e.printStackTrace();
 		}
 		return false;
-        
-		
-		
 }
 	
+
+	public ArrayList<TransactionDTO> getAllTransactions(int accountID,Date startDate, Date endDate){
+		ArrayList<TransactionDTO> transactions=new ArrayList<TransactionDTO>();
+		try(Connection connection = DBConnection.getConnection()){
+			String query="SELECT * FROM transactions WHERE (sourceAcctID=? ) and (transactionDate  BETWEEN ? AND ?)";
+			try(PreparedStatement preparedStatement = connection.prepareStatement(query)){
+				preparedStatement.setInt(1, accountID);
+				preparedStatement.setObject(2, new java.sql.Timestamp(startDate.getTime()));
+				preparedStatement.setObject(3, new java.sql.Timestamp(endDate.getTime()));
+
+				ResultSet rs=preparedStatement.executeQuery();
+				while(rs.next()) {
+					TransactionDTO bankDao=new TransactionDTO();
+					bankDao.setTransactionID(rs.getInt("transactionID"));
+					bankDao.setSourceAcctID(rs.getInt("sourceAcctID"));
+					bankDao.setTargetAcctID(rs.getInt("targetAcctID"));
+					bankDao.setAmount(rs.getDouble("amount"));
+					bankDao.setTransactionType(rs.getString("transactionType"));
+					bankDao.setTransactionDate(rs.getDate("transactionDate"));
+					transactions.add(bankDao);
+				}
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return transactions;
 	
+	}
 	
 	
 	

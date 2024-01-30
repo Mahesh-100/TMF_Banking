@@ -1,11 +1,14 @@
 package dto;
 
+import java.util.Date;
+
 public class TransactionDTO {
 	private int transactionID;
 	private int sourceAcctID;
     private int targetAcctID;
     private double amount;
     private String transactionType;
+    private Date transactionDate;
 	
 
     public TransactionDTO() {
@@ -24,6 +27,16 @@ public class TransactionDTO {
 
  
 	
+	public Date getTransactionDate() {
+		return transactionDate;
+	}
+
+
+	public void setTransactionDate(Date transactionDate) {
+		this.transactionDate = transactionDate;
+	}
+
+
 	public int getTransactionID() {
 		return transactionID;
 	}

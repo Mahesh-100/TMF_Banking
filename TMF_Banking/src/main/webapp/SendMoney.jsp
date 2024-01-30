@@ -25,7 +25,7 @@
 <h2>Send Money</h2>
 
  
-   <h3>Welcome <%out.print(user.getUsername());%>
+   <h3>Welcome <%out.print(user.getUser_fullname());%>
 </h3>
 <form action="http://localhost:8082/TMF_Banking/SendMoneyServlet" method="post">
 	<input type="hidden" name="fromAccountNumber" value="<%=request.getAttribute("accountNumber") %>">

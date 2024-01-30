@@ -29,7 +29,7 @@
    }else{%>
  <div class="userDetails">
 
- <h2>Welcome <% out.print(user.getUsername());%>
+ <h2>Welcome <% out.print(user.getUser_fullname());%>
 </h2>
    
 <p>Full Name:<%out.print(user.getUser_fullname()); %></p>
@@ -85,9 +85,7 @@
     <button  style="width:25%"class="AllBtn" onclick="validateAndRedirect('AddMoney')"> Add Money</button>
      
     <button type="button" style ="width:25%" class="AllBtn" onclick="validateAndRedirect('SendMoney')">Send Money</button>
-       <!-- <a href="SendMoney.jsp" class="AllBtn"   >Send Money</a>
-     <a href="Statement.jsp" class="AllBtn"   >Statement</a>
-     <a href="AddMoney.jsp" class="AllBtn"   >Add Money</a>-->
+     
     
 </div>
 
