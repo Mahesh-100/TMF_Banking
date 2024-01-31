@@ -112,12 +112,12 @@ public class BankDao {
 	}
 }
 	
-    public  double getBalance(String selectedAccountNumber) throws SQLException {
+    public  double getBalance(int accountID) throws SQLException {
         double balance = 0.0;
         try (Connection connection = DBConnection.getConnection()){;
-        	String sql="SELECT current_balance FROM bank_account WHERE bank_account_no = ?";
+        	String sql="SELECT current_balance FROM bank_account WHERE accountID = ?";
           try(PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, selectedAccountNumber);
+            statement.setInt(1, accountID);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     balance = resultSet.getDouble("current_balance");
@@ -150,13 +150,13 @@ public class BankDao {
 	
 	
 	
-	public boolean updateBalance(String selectedAccountNumber,double newBalance) throws SQLException {
+	public boolean updateBalance(int accountID,double newBalance) throws SQLException {
 		try (Connection connection = DBConnection.getConnection()){
-			String sql="UPDATE bank_account SET current_balance =? WHERE  bank_account_no=?";
+			String sql="UPDATE bank_account SET current_balance =? WHERE  accountID=?";
 			
 			try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
 				preparedStatement.setDouble(1, newBalance);
-	            preparedStatement.setString(2, selectedAccountNumber);
+				preparedStatement.setInt(2, accountID);
 	           
 				
 	            int rowsAffected = preparedStatement.executeUpdate();

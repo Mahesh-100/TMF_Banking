@@ -30,9 +30,10 @@ public class ButtonServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 String selectedAction = request.getParameter("selectedAction");
-		 String accountNumber=request.getParameter("selectedAccount");
-		 String accountID=request.getParameter("accountID");
-		 request.setAttribute("accountNumber", accountNumber);
+		
+		 int accountID = Integer.parseInt(request.getParameter("selectedAccount"));
+		 
+		
 		 request.setAttribute("accountID", accountID);
 		 
 //		 PrintWriter out=response.getWriter();

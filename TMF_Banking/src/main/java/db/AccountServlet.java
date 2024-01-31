@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import dao.BankDao;
 import dto.BankAccountDTO;
+import dto.TransactionDTO;
 import dto.UserDTO;
 
 
@@ -25,7 +26,7 @@ public class AccountServlet extends HttpServlet {
     
     public AccountServlet() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
 	
@@ -45,10 +46,15 @@ public class AccountServlet extends HttpServlet {
 		
 		BankAccountDTO bankAccount= new BankAccountDTO( username,accountNumber,bankName,IFSCcode,accountType,currentBalance);
         BankDao bankDAO= new BankDao();
+        
+        
         try {
-			if(bankDAO.insertBankAccount(bankAccount)) {
-				
-				ArrayList<BankAccountDTO> banklist=bankDAO.getAllAccountDetails(username);
+        	boolean insertSuccess=bankDAO.insertBankAccount(bankAccount);
+            int accountID=bankDAO.getAccountID(accountNumber);
+    		TransactionDTO transaction=new TransactionDTO(accountID,accountID,currentBalance,"initial balance");
+    		boolean TransactionSuccess=bankDAO.logTransaction(transaction);
+			 if(insertSuccess&&TransactionSuccess){
+			ArrayList<BankAccountDTO> banklist=bankDAO.getAllAccountDetails(username);
 				request.setAttribute("accounts", banklist);
             	RequestDispatcher rd=request.getRequestDispatcher("Home.jsp");
             	rd.forward(request, response);

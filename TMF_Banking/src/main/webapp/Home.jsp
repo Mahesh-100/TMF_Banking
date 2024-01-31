@@ -61,8 +61,7 @@
     
      <%for (BankAccountDTO account : banklist) { %>
      <tr>
-     <td><input  type="radio" name="selectedAccount" value="<%=account.getAccount_no() %>">
-     <input type="hidden" name="accountID" value="<%=account.getAccountID()%>"></td>
+     <td><input  type="radio" name="selectedAccount" value="<%=account.getAccountID() %>"></td>
      <td><%=account.getAccount_no() %></td>
      <td><%=account.getBank_name() %></td>
      <td><%=account.getIFSC_code() %></td>

@@ -41,7 +41,7 @@ public class SendMoneyServlet extends HttpServlet {
 		
 			
 			int sourceaccountID = Integer.parseInt(request.getParameter("accountID"));
-			String fromAccountNumber =request.getParameter("fromAccountNumber");
+			
 			double amount=Double.parseDouble(request.getParameter("amount"));
 			String toAccountNumber=request.getParameter("recipientAccount");
 //			String recipientName=request.getParameter("recipientName");
@@ -56,13 +56,13 @@ public class SendMoneyServlet extends HttpServlet {
 				targetAccountID = dao.getAccountID(toAccountNumber);
 				TransactionDTO transactionOfSource=new TransactionDTO(sourceaccountID,targetAccountID,amount,"debit");
 				TransactionDTO transactionOfTarget=new TransactionDTO(targetAccountID,sourceaccountID,amount,"credit");
-				double sourceBalance = dao.getBalance(fromAccountNumber);
+				double sourceBalance = dao.getBalance(sourceaccountID);
 		        double newSourceBalance = sourceBalance - amount;
-		        boolean updateSourceBalance=dao.updateBalance(fromAccountNumber, newSourceBalance);
+		        boolean updateSourceBalance=dao.updateBalance(sourceaccountID, newSourceBalance);
 
-		        double targetBalance = dao.getBalance(toAccountNumber);
+		        double targetBalance = dao.getBalance(targetAccountID);
 		        double newTargetBalance = targetBalance + amount;
-		        boolean updateTargetBalance=dao.updateBalance(toAccountNumber, newTargetBalance);
+		        boolean updateTargetBalance=dao.updateBalance(targetAccountID, newTargetBalance);
 				
 		        boolean sourceTransaction=dao.logTransaction(transactionOfSource);
 		        boolean targetTransaction=dao.logTransaction(transactionOfTarget);

@@ -34,7 +34,7 @@ public class AddMoneyServlet extends HttpServlet {
 		UserDTO user=(UserDTO)session.getAttribute("user");
 		String username=user.getUsername();
 		
-		String selectedAccountNumber=request.getParameter("accountNumber");
+	
 		int accountID = Integer.parseInt(request.getParameter("accountID"));
 		double amount=Double.parseDouble(request.getParameter("amount"));
 		
@@ -43,9 +43,9 @@ public class AddMoneyServlet extends HttpServlet {
 		TransactionDTO transaction=new TransactionDTO(accountID,accountID,amount,"add");
 	 
 		try {
-			double currentBalance=dao.getBalance(selectedAccountNumber);
+			double currentBalance=dao.getBalance(accountID);
 			double newBalance=currentBalance+amount;
-			boolean updateSuccess= dao.updateBalance(selectedAccountNumber, newBalance);
+			boolean updateSuccess= dao.updateBalance(accountID, newBalance);
 			boolean TransactionSuccess=dao.logTransaction(transaction);
 			if (updateSuccess &&TransactionSuccess) {
 				ArrayList<BankAccountDTO> banklist=dao.getAllAccountDetails(username);
