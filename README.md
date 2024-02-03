@@ -1,4 +1,4 @@
-#Bank application:
+#Bank application: Using Servlets and jsp
 <-------------------------->
 Data base name: bank_customers
 user_info table:
