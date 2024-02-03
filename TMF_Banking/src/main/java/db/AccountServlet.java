@@ -56,7 +56,7 @@ public class AccountServlet extends HttpServlet {
 			 if(insertSuccess&&TransactionSuccess){
 			ArrayList<BankAccountDTO> banklist=bankDAO.getAllAccountDetails(username);
 				request.setAttribute("accounts", banklist);
-            	RequestDispatcher rd=request.getRequestDispatcher("Home.jsp");
+            	RequestDispatcher rd=request.getRequestDispatcher("home.jsp");
             	rd.forward(request, response);
 				
 			}else {

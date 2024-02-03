@@ -48,7 +48,7 @@ public class ButtonServlet extends HttpServlet {
             	rd.forward(request, response);
 		    }
 		    else {
-		    	response.sendRedirect("Home.jsp");
+		    	response.sendRedirect("home.jsp");
 		    }
 				
 	}

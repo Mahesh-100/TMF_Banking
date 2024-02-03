@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
         		
         	   
             	request.setAttribute("accounts", banklist);
-            	RequestDispatcher rd=request.getRequestDispatcher("Home.jsp");
+            	RequestDispatcher rd=request.getRequestDispatcher("home.jsp");
             	rd.forward(request, response);
         	}else {
         		RequestDispatcher rd=request.getRequestDispatcher("login.jsp");

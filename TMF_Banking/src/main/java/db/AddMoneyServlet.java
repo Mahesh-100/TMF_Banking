@@ -50,7 +50,7 @@ public class AddMoneyServlet extends HttpServlet {
 			if (updateSuccess &&TransactionSuccess) {
 				ArrayList<BankAccountDTO> banklist=dao.getAllAccountDetails(username);
 				request.setAttribute("accounts", banklist);
-            	RequestDispatcher rd=request.getRequestDispatcher("Home.jsp");
+            	RequestDispatcher rd=request.getRequestDispatcher("home.jsp");
             	rd.forward(request, response);
 	        } else {
 	            PrintWriter out=response.getWriter();
