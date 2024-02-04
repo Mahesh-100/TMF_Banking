@@ -16,7 +16,7 @@
     <div class="container">
         <div class="form-box">
             <h2>Registration</h2>
-            <form action="/register" method="post">
+            <form action="http://localhost:8082/TMF_Banking/Register" method="post">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required><br>
 

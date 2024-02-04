@@ -34,16 +34,16 @@ public class ButtonServlet extends HttpServlet {
 //		 out.append(accountNumber+""+sourceId);
 		    
 		    if ("Statement".equals(selectedAction)) {
-		        // Handle Add Money action
+		        
 		    	RequestDispatcher rd=request.getRequestDispatcher("Statement.jsp");
             	rd.forward(request, response);
 		    	
 		    } else if ("AddMoney".equals(selectedAction)) {
-		        // Handle Request Statement action
+		       
 		    	RequestDispatcher rd=request.getRequestDispatcher("AddMoney.jsp");
             	rd.forward(request, response);
 		    }else if ("SendMoney".equals(selectedAction)) {
-		        // Handle Request Statement action
+		        
 		    	RequestDispatcher rd=request.getRequestDispatcher("SendMoney.jsp");
             	rd.forward(request, response);
 		    }
