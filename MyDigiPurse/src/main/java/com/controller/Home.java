@@ -1,8 +1,12 @@
 package com.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.controller.dao.UserDao;
+import com.controller.entity.UserDTO;
 @Controller
 public class Home {
 	@RequestMapping("/login")
@@ -12,9 +16,19 @@ public class Home {
 		return mv;
 	}
 	@RequestMapping("/register")
-	public ModelAndView getRegisterPage() {
-		ModelAndView mv= new ModelAndView();
-		mv.setViewName("registration");
-		return mv;
-	}
+    public ModelAndView register(UserDTO user) {
+		UserDao userDao = new UserDao();
+		
+        boolean success = userDao.saveData(user);
+        if (success) {
+            return new ModelAndView("redirect:/login");
+        } else {
+            ModelAndView modelAndView = new ModelAndView("register");
+            modelAndView.addObject("message", "Registration failed. Please try again.");
+            return modelAndView;
+        }
+    
 }
+
+	}
+
