@@ -8,13 +8,20 @@ import com.controller.entity.UserDTO;
 
 public class UserDao {
 	
-	public  boolean saveData(UserDTO user) {
-		Session session=SessionFactoryProvider.getSessionFactory();
-		Transaction txn=session.beginTransaction();
-		session.save(user);
-		txn.commit();
-		session.close();
-		return false;
-	}
+	public boolean insertUser(UserDTO user) {
+        Transaction transaction = null;
+        try (Session session = SessionFactoryProvider.getSessionFactory()) {
+            transaction = session.beginTransaction();
+            session.save(user);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
+    }
 	
 }

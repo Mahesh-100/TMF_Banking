@@ -1,6 +1,5 @@
 package com.controller.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,23 +7,23 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user_info")
+@Table(name="User_info")
 
 public class UserDTO {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-	@Column
+	private int user_id;
+	
 	private String username;
-	@Column
+	
     private String password;
-	@Column
+	
     private String fullName;
-	@Column
+	
     private String phoneNumber;
-	@Column
+	
     private String email;
-	@Column
+
     private String address;
 	
    
@@ -38,11 +37,14 @@ public class UserDTO {
 		this.email = email;
 		this.address = address;
 	}
+	public UserDTO() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getId() {
-		return id;
+		return user_id;
 	}
 	public void setId(int id) {
-		this.id = id;
+		this.user_id = id;
 	}
 	public String getUsername() {
 		return username;

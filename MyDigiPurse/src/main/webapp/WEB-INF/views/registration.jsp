@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,7 @@
     <div class="container">
         <div class="form-box">
             <h2>Registration</h2>
-            <form action="register" method="Post">
+            <form action="http://localhost:8082/MyDigiPurse/registration" method="post">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required><br>
 
@@ -40,9 +41,9 @@
                 <h3>Already have a account?</h3>
                 <button type="submit" >Login</button></form>
            
-				<% if (request.getAttribute("message") != null) { %>
-                  <p><%= request.getAttribute("message") %></p>
-                    <% } %>
+				<c:if test="${not empty errorMessage}">
+        <p style="color: red;">${errorMessage}</p>
+    </c:if>
             <!-- Display error message if registration fails 
             <c:if test="${not empty requestScope.error}">
                 <div class="error-message">${requestScope.error}</div>
