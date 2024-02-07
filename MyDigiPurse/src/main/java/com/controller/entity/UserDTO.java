@@ -1,5 +1,6 @@
 package com.controller.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,15 +9,22 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="user_info")
+
 public class UserDTO {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	@Column
 	private String username;
+	@Column
     private String password;
+	@Column
     private String fullName;
+	@Column
     private String phoneNumber;
+	@Column
     private String email;
+	@Column
     private String address;
 	
    
