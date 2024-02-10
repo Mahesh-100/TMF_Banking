@@ -19,7 +19,7 @@
        
             <h2>Login</h2>
             <form action="http://localhost:8082/TMF_Banking/Login" method="post">
-                <label for="username">Username:</label>
+                <label for="username">User Name:</label>
                 <input type="text" id="username" name="username" required><br>
 
                 <label for="password">Password:</label>
