@@ -26,7 +26,7 @@
                 <input type="password" id="password" name="password" required><br>
 
                 <button type="submit">Login</button> </form>
-                <form action="register">
+                <form action="registration">
                 <h3>New user?</h3>
              <button type="submit" >Register</button>
              </form>
