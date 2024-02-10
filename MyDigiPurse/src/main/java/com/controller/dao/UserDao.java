@@ -2,6 +2,7 @@ package com.controller.dao;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import com.controller.SessionFactoryProvider;
 import com.controller.entity.UserDTO;
@@ -9,8 +10,9 @@ import com.controller.entity.UserDTO;
 
 
 public class UserDao {
+	Transaction transaction = null;
 	public boolean saveUserDetails(UserDTO user) {
-		Transaction transaction = null;
+		
 		
 		try {
 			Session session = SessionFactoryProvider.getSessionFactory();
@@ -25,9 +27,20 @@ public class UserDao {
 		}
 		
             e.printStackTrace();
-            return false;
+            
 		
 	}
+		return false;
 	
 }
+
+	public UserDTO showUserDetails(String username, String password) {
+		Session session=SessionFactoryProvider.getSessionFactory();
+		transaction=session.beginTransaction();
+		Query<UserDTO> query = session.createQuery("FROM UserDTO WHERE username = :username AND password = :password", UserDTO.class);
+        query.setParameter("username", username);
+        query.setParameter("password", password);
+        return query.uniqueResult();
+		
+	}
 }
