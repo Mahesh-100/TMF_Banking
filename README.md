@@ -17,7 +17,7 @@ bank_account table:
 CREATE TABLE Bank_Account (
     accountID INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) ,
-    bank_account_no VARCHAR(20) ,
+    bank_account_no VARCHAR(20) unique,
     bank_name VARCHAR(255),
     IFSC_code VARCHAR(11),
     account_type VARCHAR(50),
