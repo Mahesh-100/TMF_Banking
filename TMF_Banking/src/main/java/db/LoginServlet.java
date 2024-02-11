@@ -18,19 +18,16 @@ import dto.UserDTO;
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    
-    public LoginServlet() {
-        super();
-          }
+      
+          
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 
 		String username = request.getParameter("username");
         String password = request.getParameter("password");
-      
+                 
         BankDao dao=new BankDao();
         UserDTO user=dao.getUserDetails(username);
         HttpSession session=request.getSession();
