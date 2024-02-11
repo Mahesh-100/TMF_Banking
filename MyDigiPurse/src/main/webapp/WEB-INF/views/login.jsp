@@ -30,13 +30,6 @@
                 <h3>New user?</h3>
              <button type="submit" >Register</button>
              </form>
-               
-                
-
-            <!-- Display error message if login fails 
-            <c:if test="${not empty requestScope.error}">
-                <div class="error-message">${requestScope.error}</div>
-            </c:if>-->
         </div>
     </div>
     

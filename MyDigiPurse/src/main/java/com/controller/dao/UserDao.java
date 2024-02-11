@@ -5,6 +5,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import com.controller.SessionFactoryProvider;
+import com.controller.entity.BankDTO;
 import com.controller.entity.UserDTO;
 
 
@@ -43,4 +44,29 @@ public class UserDao {
         return query.uniqueResult();
 		
 	}
+	
+	
+public boolean saveBankDetails(BankDTO bank) {
+		
+		
+		try {
+			Session session = SessionFactoryProvider.getSessionFactory();
+			 transaction = session.beginTransaction();
+			session.save(bank);
+			transaction.commit();
+			session.close();
+			return false;
+		}catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+		}
+		
+            e.printStackTrace();
+            
+		
+	}
+		return false;
+	
+}
+	
 }
