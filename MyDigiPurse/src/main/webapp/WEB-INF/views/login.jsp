@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
-<link href="<c:url value="/resources/styles/styles.css"/>">
+<link  rel="stylesheet" href="<c:url value="/resources/styles/styles.css"/>">
 <script type="text/javascript"  src="<c:url value="/resources/scripts/Script.js"/>" ></script>
 </head>
 <body>

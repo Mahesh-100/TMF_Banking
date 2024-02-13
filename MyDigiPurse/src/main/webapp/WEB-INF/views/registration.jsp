@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Registration</title>
-<link rel="stylesheet" href="/styles/styles.css">
+<link  rel="stylesheet" href="<c:url value="/resources/styles/styles.css"/>">
 
 </head>
 <body>

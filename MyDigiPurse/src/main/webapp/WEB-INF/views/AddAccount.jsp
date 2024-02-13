@@ -8,8 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Add Account Form</title>
-<link rel="stylesheet" href="styles/styles.css">
-<script type="text/javascript" src="scripts/Script.js"></script>
+<link  rel="stylesheet" href="<c:url value="/resources/styles/styles.css"/>">
+<script type="text/javascript"  src="<c:url value="/resources/scripts/Script.js"/>" ></script>
 
 </head>
 <body>
