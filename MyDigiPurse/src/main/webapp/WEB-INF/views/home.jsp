@@ -21,10 +21,11 @@
 </header>
 
 
-<% 
-   if(session.getAttribute("username")==null) {
+<% UserDTO user=(UserDTO)session.getAttribute("user");
+   if(user==null) {
 	   response.sendRedirect("login");
-   }else{%>
+   }else{
+   %>
  <div class="userDetails">
 
  <h2>Welcome, ${user.username}</h2>

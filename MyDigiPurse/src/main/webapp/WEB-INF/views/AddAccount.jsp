@@ -18,9 +18,10 @@
         <h1>MyDigiPurse</h1>
 </header>
 
-<%  if(session.getAttribute("username")==null) {
+<%   UserDTO user=(UserDTO)session.getAttribute("user");
+if(user==null) {
 	   response.sendRedirect("login");
-   }else{%>
+}else{%>
 <div class="container">
 <div class="form-box">
 <h2>Bank Account Form</h2>
@@ -31,7 +32,7 @@
  
    <h3>Welcome,${user.username}</h3>
    
-     <input type="hidden" name="use_id" value=" ${user.user_id }">
+     <input type="hidden" name="user_id" value=" ${user.user_id }">
     <label for="accountNumber">Account Number:</label>
     <input type="text" id="accountNumber" name="accountNumber" required>
 

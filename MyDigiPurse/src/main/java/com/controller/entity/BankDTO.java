@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="bank_Account")
+@Table(name="bank_info")
 public class BankDTO {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -35,10 +35,16 @@ public class BankDTO {
 		this.user_id = user_id;
 		this.bank_account_no = bank_account_no;
 		this.bank_name = bank_name;
-		IFSC_code = iFSC_code;
+		this.IFSC_code = iFSC_code;
 		this.account_type = account_type;
 		this.current_balance = current_balance;
 	}
+	public BankDTO() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	
 	public int getUser_id() {
 		return user_id;
 	}
@@ -67,7 +73,7 @@ public class BankDTO {
 		return IFSC_code;
 	}
 	public void setIFSC_code(String iFSC_code) {
-		IFSC_code = iFSC_code;
+		this.IFSC_code = iFSC_code;
 	}
 	public String getAccount_type() {
 		return account_type;

@@ -7,7 +7,7 @@
 	
 	<session-factory>
 	<property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-	<property name="connection.url">jdbc:mysql://localhost:3306/db_hib</property>
+	<property name="connection.url">jdbc:mysql://localhost:3306/db_hbm</property>
 	<property name="connection.username">root</property>
 	<property name="connection.password">89788</property>
 	<property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
@@ -16,6 +16,7 @@
 	
 	
 	<mapping class="com.controller.entity.UserDTO" />
+	<mapping class="com.controller.entity.BankDTO" />
 	
 	</session-factory>
 	
