@@ -1,6 +1,8 @@
 package com.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -8,8 +10,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.controller.dao.UserDao;
@@ -39,6 +41,7 @@ public class Home {
     UserDTO user= new UserDTO(username,password,userFullname,phoneNo,email,userAddress);
     
        if(userDAO.saveUserDetails(user)) {
+  
     	   return "redirect:/login";
 		}else {
 			return "redirect:/registration";
@@ -58,13 +61,22 @@ public class Home {
 	    	
 	        UserDTO user = userDAO.showUserDetails(username, password);
 	        if (user != null) {
+	        	List<BankDTO> bank=userDAO.getBankDetailsByUserId(user.getUser_id());
 	        	session.setAttribute("user", user);
+	        	model.addAttribute("banklist", bank);
 	           return "home"; 
 	        } else {
 	            return "redirect:/login"; 
 	        }
 	    }
 	    
+	   
+         @PostMapping("/home")
+		public ModelAndView  getHomePage() {
+			ModelAndView mv= new ModelAndView();
+			mv.setViewName("home");
+			return mv;
+		}
 	    
 //	    @GetMapping("/addaccount")
 //	    public ModelAndView showBankDetailsForm() {
@@ -112,17 +124,19 @@ public class Home {
 	    @PostMapping("/addaccount")
 	    public String processAddAccount(HttpServletRequest request, HttpServletResponse response, Model model) {
 	    	
-	    	int user_id=Integer.parseInt("user_id");
+	    	String user_id_string=request.getParameter("user_id");
+	    	int user_id=Integer.parseInt(user_id_string);
 	    	String bank_account=request.getParameter("accountNumber");
 	    	String bank_name=request.getParameter("bankName");
 	    	String IFSC_Code=request.getParameter("ifscCode");
 	    	String account_type=request.getParameter("accountType");
-	    	double current_balance=Double.parseDouble("initialBalance");
+	    	String money=request.getParameter("initialBalance");
+	    	double current_balance=Double.parseDouble(money);
 	    	
 	    	
 	    	BankDTO bank=new BankDTO(user_id,bank_account,bank_name,IFSC_Code,account_type,current_balance);
 	    	if(userDAO.saveBankDetails(bank)) {
-	    		model.addAttribute("bank", bank);
+	    		
 	    		return "redirect:/home";
 	    	}else {
 	    		model.addAttribute("error", "something went wrong");

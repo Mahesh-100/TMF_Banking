@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Home</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="/static/styles/styles.css">
 <script type="text/javascript" src="Script.js"></script>
 </head>
 <body>
@@ -39,7 +39,35 @@
 <div class="accountsList">
  <a href="addaccount" class="AllBtn" style="float: right; margin-right: 20px;"  >Add Account</a>
     <!-- Display accounts in radio buttons here -->
-   
+   <h2>Accounts</h2>
+ 	
+     <table class="Bank-table">
+     <thead>
+     <tr>
+     <th>Select</th>
+     <th>Account Number</th>
+     <th>Bank Name</th>
+     <th>IFSC code</th>
+     <th>Account type</th>
+     <th>Current Balance</th>
+     <th>Last transaction</th>
+     </tr>
+     </thead>
+    
+     <tbody>
+      <c:forEach items="${banklist}" var="bank">
+                <tr>
+                	<td><input  type="radio" name="selectedAccount" value="${bank.bank_account_no}"></td>
+                    <td>${bank.bank_account_no}</td>
+                    <td>${bank.bank_name}</td>
+                    <td>${bank.IFSC_code}</td>
+                    
+                    <td>${bank.account_type}</td>
+                    <td>${bank.current_balance}</td>
+                </tr>
+            </c:forEach>
+        </tbody>
+         </table>
    
  
 </div>

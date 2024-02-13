@@ -16,6 +16,8 @@
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
+    <mvc:resources mapping="/styles/styles.css" location="/WEB-INF/static/styles/styles.css" />
+    <mvc:resources mapping="/scripts/Script.js" location="/WEB-INF/static/scripts/" />
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/"></property>
 		<property name="suffix" value=".jsp"></property>

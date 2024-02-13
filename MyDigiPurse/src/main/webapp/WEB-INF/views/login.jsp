@@ -6,11 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="/static/styles/styles.css">
 </head>
 <body>
 <header>
-        <img src="logo.jpg" alt="Company Logo">
+        <img src="" alt="Company Logo">
         <h1>MyDigiPurse</h1>
     </header>
 

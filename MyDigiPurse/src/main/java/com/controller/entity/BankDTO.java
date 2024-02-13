@@ -35,7 +35,7 @@ public class BankDTO {
 		this.user_id = user_id;
 		this.bank_account_no = bank_account_no;
 		this.bank_name = bank_name;
-		this.IFSC_code = iFSC_code;
+		IFSC_code = iFSC_code;
 		this.account_type = account_type;
 		this.current_balance = current_balance;
 	}
@@ -73,7 +73,7 @@ public class BankDTO {
 		return IFSC_code;
 	}
 	public void setIFSC_code(String iFSC_code) {
-		this.IFSC_code = iFSC_code;
+		IFSC_code = iFSC_code;
 	}
 	public String getAccount_type() {
 		return account_type;

@@ -25,14 +25,14 @@ if(user==null) {
 <div class="container">
 <div class="form-box">
 <h2>Bank Account Form</h2>
-
+<h1>${error}</h1>
 <form action="addaccount" method="post">
 	
     <h2>${error}</h2>
  
    <h3>Welcome,${user.username}</h3>
    
-     <input type="hidden" name="user_id" value=" ${user.user_id }">
+     <input type="hidden" name="user_id" value= ${user.user_id }>
     <label for="accountNumber">Account Number:</label>
     <input type="text" id="accountNumber" name="accountNumber" required>
 
