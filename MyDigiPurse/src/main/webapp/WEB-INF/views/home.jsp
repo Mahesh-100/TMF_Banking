@@ -9,8 +9,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Home</title>
-<link rel="stylesheet" href="/static/styles/styles.css">
-<script type="text/javascript" src="Script.js"></script>
+<link rel="stylesheet" href="styles/styles.css">
+<script type="text/javascript" src="scripts/Script.js"></script>
 </head>
 <body>
 <form id="accountForm" action="http://localhost:8082/TMF_Banking/ButtonServlet" method="post">

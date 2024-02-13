@@ -8,8 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Add Account Form</title>
-<link rel="stylesheet" href="styles.css">
-<script type="text/javascript" src="Script.js"></script>
+<link rel="stylesheet" href="styles/styles.css">
+<script type="text/javascript" src="scripts/Script.js"></script>
 
 </head>
 <body>
@@ -25,7 +25,6 @@ if(user==null) {
 <div class="container">
 <div class="form-box">
 <h2>Bank Account Form</h2>
-<h1>${error}</h1>
 <form action="addaccount" method="post">
 	
     <h2>${error}</h2>
