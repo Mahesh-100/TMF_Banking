@@ -30,8 +30,6 @@ public class ButtonServlet extends HttpServlet {
 		
 		 request.setAttribute("accountID", accountID);
 		 
-//		 PrintWriter out=response.getWriter();
-//		 out.append(accountNumber+""+sourceId);
 		    
 		    if ("Statement".equals(selectedAction)) {
 		        
