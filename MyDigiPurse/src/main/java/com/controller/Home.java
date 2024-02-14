@@ -171,7 +171,7 @@ public class Home {
 	    
 	    
 	    @PostMapping("/addmoney")
-	    public ModelAndView yourMethod(@RequestParam("accountID") int accountID,
+	    public ModelAndView addMoney(@RequestParam("accountID") int accountID,
 	                                   @RequestParam("amount") double amount) {
 	    	ModelAndView modelAndView = new ModelAndView();
 	    	double currentBalance=userDAO.getCurrentBalance(accountID);

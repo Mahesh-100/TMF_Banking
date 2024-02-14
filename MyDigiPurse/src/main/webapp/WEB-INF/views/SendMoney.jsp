@@ -27,8 +27,8 @@
    <h3>Welcome ${user.user_fullname}
 </h3>
 <form action="sendmoney" method="post">
-	<input type="hidden" name="fromAccountNumber" value="">
-	<input type="hidden" name="accountID" value="">
+	
+	<input type="hidden" name="accountID" value="${accountID}">
    
 
     <label for="recipientAccount">Recipient's Account Number:</label>

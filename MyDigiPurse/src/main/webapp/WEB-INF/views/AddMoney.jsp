@@ -35,7 +35,7 @@
 </h3>
 <form  id="addMoneyForm" action="addmoney" method="post">
      
-	<input type="hidden" name="accountNumber" value= " " >
+	
 	<input type="hidden" name="accountID" value="${accountID}">
     <label for="amount">Amount to Add:</label>
     <input type="number" id="amount" name="amount" required>
