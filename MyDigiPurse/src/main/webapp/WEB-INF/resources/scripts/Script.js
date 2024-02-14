@@ -4,7 +4,7 @@
 
 
 function requestlogout() {
-	window.location.href = "logout.jsp";
+	window.location.href = "logout";
 }
 function validateAndRedirect(action) {
             var selectedAccount = document.querySelector('input[name="selectedAccount"]:checked');

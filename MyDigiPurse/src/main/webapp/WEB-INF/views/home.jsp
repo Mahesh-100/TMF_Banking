@@ -13,7 +13,7 @@
 <script type="text/javascript"  src="<c:url value="/resources/scripts/Script.js"/>" ></script>
 </head>
 <body>
-<form id="accountForm" action=" " method="post">
+<form id="accountForm" action="navigate" method="post">
 <input type="hidden" id="selectedPage" name="selectedPage">
 <header>
         <img src="" alt="Company Logo">
@@ -57,7 +57,7 @@
      <tbody>
       <c:forEach items="${banklist}" var="bank">
                 <tr>
-                	<td><input  type="radio" name="selectedAccount" value="${bank.bank_account_no}"></td>
+                	<td><input  type="radio" name="selectedAccount" value="${bank.accountID}"></td>
                     <td>${bank.bank_account_no}</td>
                     <td>${bank.bank_name}</td>
                     <td>${bank.IFSC_code}</td>

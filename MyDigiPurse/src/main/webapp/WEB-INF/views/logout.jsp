@@ -12,7 +12,7 @@
 if(se!=null){
 	se.invalidate();
 }
-  response.sendRedirect("login.jsp");
+  response.sendRedirect("login");
 %>
 </body>
 </html>

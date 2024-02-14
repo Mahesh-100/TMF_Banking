@@ -115,6 +115,14 @@ public class Home {
 			return mv;
 		}  
 	    
+//	    @GetMapping("/logout")
+//		public ModelAndView  getLogoutPage() {
+//			ModelAndView mv= new ModelAndView();
+//			mv.setViewName("logout");
+//			return mv;
+//		}  
+	   
+	    
 	    @PostMapping("/addaccount")
 	    public String processAddAccount(HttpServletRequest request, HttpServletResponse response, Model model) {
 	    	
@@ -131,6 +139,7 @@ public class Home {
 	    	BankDTO bank=new BankDTO(user_id,bank_account,bank_name,IFSC_Code,account_type,current_balance);
 	    	if(userDAO.saveBankDetails(bank)) {
 	    		
+	    		
 	    		return "redirect:/login";
 	    	}else {
 	    		model.addAttribute("error", "something went wrong");
@@ -138,5 +147,50 @@ public class Home {
 	    	}
 	    	
 	    }
-}
+	    
+	    
+	    @PostMapping("/navigate")
+	    public ModelAndView processButton(@RequestParam("selectedAction") String selectedAction,
+	                               @RequestParam("selectedAccount") int accountID) {
+	        ModelAndView modelAndView = new ModelAndView();
+	        
+	        modelAndView.addObject("accountID", accountID);
+	        
+	        if ("Statement".equals(selectedAction)) {
+	            modelAndView.setViewName("Statement"); 
+	        } else if ("AddMoney".equals(selectedAction)) {
+	            modelAndView.setViewName("AddMoney"); 
+	        } else if ("SendMoney".equals(selectedAction)) {
+	            modelAndView.setViewName("SendMoney"); 
+	        } else {
+	            modelAndView.setViewName("home"); 
+	        }
+	        
+	        return modelAndView;
+	    }
+	    
+	    
+	    @PostMapping("/addmoney")
+	    public ModelAndView yourMethod(@RequestParam("accountID") int accountID,
+	                                   @RequestParam("amount") double amount) {
+	    	ModelAndView modelAndView = new ModelAndView();
+	    	double currentBalance=userDAO.getCurrentBalance(accountID);
+	    	double newBalance=currentBalance+amount;
+	    	boolean updateBalance=userDAO.updateBalance(accountID, newBalance);
+	    	if(updateBalance) {
+	    		
+	    		modelAndView.setViewName("login");
+	    		
+	    	}else {
+	    		modelAndView.setViewName("register");
+	    	}
+			return modelAndView;
+	    	
+	    	
+	    }
+	    
+	    
+	    
+	    }
+
 
