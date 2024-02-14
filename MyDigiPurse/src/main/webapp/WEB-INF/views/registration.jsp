@@ -6,11 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Registration</title>
-<link rel="stylesheet" href="styles.css">
+<link  rel="stylesheet" href="<c:url value="/resources/styles/styles.css"/>">
+
 </head>
 <body>
 <header>
-        <img src="company-logo.png" alt="Company Logo">
+        <img src="" alt="Company Logo">
         <h1>MyDigiPurse</h1>
     </header>
 

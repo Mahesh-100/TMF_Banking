@@ -1,16 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-  
+  <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
-<link rel="stylesheet" href="styles.css">
+<link  rel="stylesheet" href="<c:url value="/resources/styles/styles.css"/>">
+<script type="text/javascript"  src="<c:url value="/resources/scripts/Script.js"/>" ></script>
 </head>
 <body>
 <header>
-        <img src="logo.jpg" alt="Company Logo">
+        <img src="" alt="Company Logo">
         <h1>MyDigiPurse</h1>
     </header>
 
@@ -30,13 +31,6 @@
                 <h3>New user?</h3>
              <button type="submit" >Register</button>
              </form>
-               
-                
-
-            <!-- Display error message if login fails 
-            <c:if test="${not empty requestScope.error}">
-                <div class="error-message">${requestScope.error}</div>
-            </c:if>-->
         </div>
     </div>
     
