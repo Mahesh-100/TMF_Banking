@@ -53,7 +53,7 @@
  
  <% }%>
  <div>
-<button style="width:10%" class="logout" onclick="requestlogout()">Logout</button>
+<a href="http://localhost:8082/MyDigiPurse/logout" style="width:10%" class="logout">Logout</a>
 </div>
 </form>
 </body>

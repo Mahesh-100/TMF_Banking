@@ -18,7 +18,10 @@
         <h1>MyDigiPurse</h1>
     </header>
 
-
+<% UserDTO user=(UserDTO)session.getAttribute("user");
+   if(user==null) {
+	   response.sendRedirect("login");
+   }else{%>
 <div class="container">
 <div class="form-box">
 <h2>Send Money</h2>
@@ -41,9 +44,8 @@
 </form>
 </div>
  </div>
-
+ <% }%>
  <div>
-<button style="width:10%" class="logout" onclick="requestlogout()">Logout</button>
-</div>
+<a href="http://localhost:8082/MyDigiPurse/logout" style="width:10%" class="logout">Logout</a></div>
 </body>
 </html>

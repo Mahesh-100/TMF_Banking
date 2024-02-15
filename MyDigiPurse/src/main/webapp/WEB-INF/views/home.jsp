@@ -50,7 +50,7 @@
      <th>IFSC code</th>
      <th>Account type</th>
      <th>Current Balance</th>
-     <th>Last transaction</th>
+     
      </tr>
      </thead>
     
@@ -89,7 +89,8 @@
    
 </form>
 <div>
-<button style="width:10%" class="logout" onclick="requestlogout()">Logout</button>
+
+<a href="http://localhost:8082/MyDigiPurse/logout" style="width:10%" class="logout">Logout</a>
 </div>
 
 </body>

@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import com.controller.dao.UserDao;
 import com.controller.entity.BankDTO;
@@ -29,15 +30,15 @@ import com.controller.entity.UserDTO;
 public class Home {
 	
 	UserDao userDAO= new UserDao();
-	
+	ModelAndView mv= new ModelAndView();
 	@GetMapping("/registration")
 	public ModelAndView  getRegistrationPage() {
-		ModelAndView mv= new ModelAndView();
+		
 		mv.setViewName("registration");
 		return mv;
 	}
 	@PostMapping("/registration")
-	public String getUserDetails(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public ModelAndView getUserDetails(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String username = request.getParameter("username");
         String password = request.getParameter("password");
         String userFullname = request.getParameter("fullname");
@@ -49,10 +50,11 @@ public class Home {
     
        if(userDAO.saveUserDetails(user)) {
   
-    	   return "redirect:/login";
+    	   mv.setViewName("login");
 		}else {
-			return "redirect:/registration";
+			mv.setViewName("registration");
 			}
+	return mv;
 }
 	
 	  @GetMapping("/login")
@@ -61,20 +63,22 @@ public class Home {
 	    }
 
 	    @PostMapping("/login")
-	    public String processLogin(@RequestParam("username") String username,
+	    public ModelAndView processLogin(@RequestParam("username") String username,
 	                               @RequestParam("password") String password,
 	                               HttpSession session,
 	                               Model model) {
-	    	
+	    	ModelAndView mv = new ModelAndView();
 	        UserDTO user = userDAO.showUserDetails(username, password);
 	        if (user != null) {
+	        	
 	        	List<BankDTO> bank=userDAO.getBankDetailsByUserId(user.getUser_id());
 	        	session.setAttribute("user", user);
 	        	model.addAttribute("banklist", bank);
-	           return "home"; 
+	           mv.setViewName("home");
 	        } else {
-	            return "redirect:/login"; 
+	            mv.setViewName("login"); 
 	        }
+			return mv;
 	    }
 	    
 	   
@@ -118,21 +122,15 @@ public class Home {
 	    
 	    @GetMapping("/addaccount")
 		public ModelAndView  getAddBankPage() {
-			ModelAndView mv= new ModelAndView();
+			
 			mv.setViewName("AddAccount");
 			return mv;
 		}  
-	    
-//	    @GetMapping("/logout")
-//		public ModelAndView  getLogoutPage() {
-//			ModelAndView mv= new ModelAndView();
-//			mv.setViewName("logout");
-//			return mv;
-//		}  
+	  
 	   
 	    
 	    @PostMapping("/addaccount")
-	    public String processAddAccount(HttpServletRequest request, HttpServletResponse response, Model model) {
+	    public ModelAndView processAddAccount(HttpServletRequest request, HttpServletResponse response, Model model) {
 	    	
 	    	String user_id_string=request.getParameter("user_id");
 	    	int user_id=Integer.parseInt(user_id_string);
@@ -144,15 +142,19 @@ public class Home {
 	    	double current_balance=Double.parseDouble(money);
 	    	
 	    	
-	    	BankDTO bank=new BankDTO(user_id,bank_account,bank_name,IFSC_Code,account_type,current_balance);
-	    	if(userDAO.saveBankDetails(bank)) {
+	    	BankDTO bank_info=new BankDTO(user_id,bank_account,bank_name,IFSC_Code,account_type,current_balance);
+	    	if(userDAO.saveBankDetails(bank_info)) {
+	    		HttpSession session=request.getSession();
+	    		UserDTO user=(UserDTO)session.getAttribute("user");
+	    		List<BankDTO> bank=userDAO.getBankDetailsByUserId(user.getUser_id());
+	    		model.addAttribute("banklist", bank);
+	    		mv.setViewName("home");
 	    		
-	    		
-	    		return "redirect:/login";
 	    	}else {
 	    		model.addAttribute("error", "something went wrong");
-	    		return "redirect:/addaccount";
+	    		mv.setViewName("AddAccount");
 	    	}
+			return mv;
 	    	
 	    }
 	    
@@ -182,12 +184,12 @@ public class Home {
 	    @PostMapping("/addmoney")
 	    public ModelAndView addMoney(@RequestParam("accountID") int accountID,
 	                                   @RequestParam("amount") double amount) {
-	    	ModelAndView modelAndView = new ModelAndView();
+	    	
 	    	Date currentDate = new Date(System.currentTimeMillis());
 	    	
 	    	StatementDTO transaction=new StatementDTO(accountID,accountID,amount,"add", currentDate);
 	    	
-	    	modelAndView.addObject("accountID", accountID);
+	    	mv.addObject("accountID", accountID);
 	    	double currentBalance=userDAO.getCurrentBalance(accountID);
 	    	double newBalance=currentBalance+amount;
 	    	
@@ -195,27 +197,23 @@ public class Home {
 	    	boolean updateBalance=userDAO.updateBalance(accountID, newBalance);
 	    	boolean TransactionSuccess=userDAO.logTransaction(transaction);
 	    	if(updateBalance && TransactionSuccess) {
-	    		
-	    		modelAndView.setViewName("login");
+	    		mv.addObject("success", "succesfully added money");
+	    		mv.setViewName("login");
 	    		
 	    	}else {
-	    		modelAndView.setViewName("info");
+	    		mv.addObject("error", "unable to add money");
+	    		mv.setViewName("info");
 	    	}
-	    	
-//	    	modelAndView.addObject("newBalance", newBalance);
-//	    	modelAndView.setViewName("info");
-	    
-			return modelAndView;
+	    	return mv;
 	    	
 	    	
 	    }
 	    
 	    @GetMapping("/logout")
-		public ModelAndView  logoutprocess() {
-	    	
-	    	
-			ModelAndView mv= new ModelAndView();
-			mv.setViewName("logout");
+		public ModelAndView  logout(HttpServletRequest request, HttpServletResponse response, SessionStatus status) {
+	    	status.setComplete(); 
+	        request.getSession().invalidate();
+	    	mv.setViewName("login");
 			return mv;
 		}     
 	    @PostMapping("/sendmoney")
@@ -223,7 +221,7 @@ public class Home {
 	                                   @RequestParam("amount") double amount,
 	                                   @RequestParam("recipientAccount") String toAccountNumber) throws SQLException {
 	    	
-	    	ModelAndView mv= new ModelAndView();
+	    	
 	    	int targetAccountID = userDAO.getAccountIdByAccountNumber(toAccountNumber);
 	    	
 	    	double sourceBalance=userDAO.getCurrentBalance(sourceAccountID);
@@ -242,9 +240,10 @@ public class Home {
 	    	 boolean targetTransaction=userDAO.logTransaction(transactionOfTarget);
 	    	 
 	    	 if (updateSourceBalance && updateTargetBalance && sourceTransaction && targetTransaction) {
-					
+				mv.addObject("success", "succesfully sent money");	
 	    		 mv.setViewName("login");
 		        } else {
+		        	mv.addObject("error","unable to send money");
 		        	mv.setViewName("info");
 		        }
 			return mv;
