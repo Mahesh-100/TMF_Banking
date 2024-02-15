@@ -1,7 +1,6 @@
-#Bank application: Using Servlets and jsp
-<-------------------------->
-Data base name: bank_customers
-user_info table:
+#Bank application: Required Tables
+
+
 CREATE TABLE User_info (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
@@ -12,25 +11,22 @@ CREATE TABLE User_info (
     user_address VARCHAR(255) NOT NULL
 );
 
-<----------------------------------------->
-bank_account table:
-CREATE TABLE Bank_Account (
+CREATE TABLE bank_info (
     accountID INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) ,
-    bank_account_no VARCHAR(20) unique,
-    bank_name VARCHAR(255),
-    IFSC_code VARCHAR(11),
-    account_type VARCHAR(50),
-    current_balance DECIMAL(10, 2),
-    FOREIGN KEY (username) REFERENCES user_info(username)
-);
-<--------------------------------------------->
-CREATE TABLE transactions (
+    user_id VARCHAR(255) not null,
+    bank_account_no VARCHAR(20) not null unique,
+    bank_name VARCHAR(255) not null,
+    IFSC_code VARCHAR(11) not null,
+    account_type VARCHAR (50) not null ,
+    current_balance DECIMAL(10, 2) not null 
+    );
+    
+CREATE TABLE transaction_info (
     transactionID INT PRIMARY KEY AUTO_INCREMENT,
     sourceAcctID INT,
     targetAcctID INT,
     amount DECIMAL(10, 2),
-    transactionType VARCHAR(10),
-    transactionDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    transactionType VARCHAR(50),
+    transactionDate Date
 );
  
