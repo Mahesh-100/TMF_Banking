@@ -18,21 +18,26 @@
     <div class="container">
         <div class="form-box">
             <h2>Registration</h2>
-            <form action="registration" method="post">
+            <form id="myForm" action="registration" method="post">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required><br>
+                 
 
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required><br>
+                
 
                 <label for="fullName">Full Name:</label>
                 <input type="text" id="fullName" name="fullname" required><br>
+                <span id="nameError" class="error"></span><br>
 
                 <label for="phoneNumber">Phone Number:</label>
                 <input type="text" id="phoneNumber" name="phone_no" pattern="[0-9]{10}" required><br>
-
+				<span id="contactError" class="error"></span><br>
+				
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required><br>
+                <span id="emailError" class="error"></span><br>
 
                 <label for="address">Address:</label>
                 <input type="text" id="address" name="address" required><br>

@@ -25,7 +25,7 @@ if(user==null) {
 <div class="container">
 <div class="form-box">
 <h2>Bank Account Form</h2>
-<form action="addaccount" method="post">
+<form id="bankDetailsForm" action="addaccount" method="post">
 	
     <h2>${error}</h2>
  
