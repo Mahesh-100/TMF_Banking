@@ -1,4 +1,6 @@
 #Bank application: Required Tables
+
+
 CREATE TABLE User_info (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
