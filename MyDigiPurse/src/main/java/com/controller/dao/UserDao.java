@@ -1,5 +1,6 @@
 package com.controller.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -9,6 +10,7 @@ import org.hibernate.query.Query;
 
 import com.controller.SessionFactoryProvider;
 import com.controller.entity.BankDTO;
+import com.controller.entity.StatementDTO;
 import com.controller.entity.UserDTO;
 
 
@@ -87,7 +89,7 @@ public double getCurrentBalance(int accountId) {
 	transaction=session.beginTransaction();
     
     // Write your Hibernate query to retrieve the current balance
-    String hql = "SELECT b.current_balance FROM BankDTO b WHERE b.id = :accountId";
+    String hql = "SELECT b.current_balance FROM BankDTO b WHERE b.accountID = :accountId";
     
     // Create a Hibernate query object
     Query<Double> query = session.createQuery(hql, Double.class);
@@ -103,21 +105,69 @@ public boolean updateBalance(int accountId, double newBalance) {
 	transaction=session.beginTransaction();
 
     try {
-        // Write your Hibernate query to update the balance
-        String hql = "UPDATE BankDTO b SET b.current_balance = :newBalance WHERE b.id = :accountId";
-
-        // Create a Hibernate query object
+        
+        String hql = "UPDATE BankDTO b SET b.current_balance = :newBalance WHERE b.accountID = :accountId";
         int updatedRows = session.createQuery(hql)
                                 .setParameter("newBalance", newBalance)
                                 .setParameter("accountId", accountId)
                                 .executeUpdate();
 
-        // Return true if at least one row was updated
+        transaction.commit();
+		session.close();
         return updatedRows > 0;
+        
     } catch (Exception e) {
     	e.printStackTrace();
         return false;
-    }
-	
+    }	
+}
+public int getAccountIdByAccountNumber(String accountNumber) {
+    
+	Session session=SessionFactoryProvider.getSessionFactory();
+	transaction=session.beginTransaction();
+   
+    String hql = "SELECT b.id FROM BankDTO b WHERE b.bank_account_no = :accountNumber";
+    
+    
+    Query<Integer> query = session.createQuery(hql, Integer.class);
+    query.setParameter("accountNumber", accountNumber);
+    
+   
+    Integer accountId = query.uniqueResult();
+    return accountId != null ? accountId : -1; // Return -1 if account ID is not found
+}
+
+public boolean logTransaction(StatementDTO txns) {
+	try {
+		Session session = SessionFactoryProvider.getSessionFactory();
+		 transaction = session.beginTransaction();
+		session.save(txns);
+		transaction.commit();
+		session.close();
+		return true;
+	}catch (Exception e) {
+        if (transaction != null) {
+            transaction.rollback();
+	}
+	e.printStackTrace();	
+}
+	return false;
+}
+
+
+public List<StatementDTO> getAllTransactions(int accountID, Date startDate, Date endDate) {
+   
+	Session session=SessionFactoryProvider.getSessionFactory();
+	transaction=session.beginTransaction();
+    
+   
+    String hql = "FROM StatementDTO t WHERE t.sourceAcctID = :accountID AND t.transactionDate BETWEEN :startDate AND :endDate";
+    
+    
+    Query<StatementDTO> query = session.createQuery(hql, StatementDTO.class);
+    query.setParameter("accountID", accountID);
+    query.setParameter("startDate", startDate);
+    query.setParameter("endDate",endDate );
+    return query.getResultList();
 }
 }

@@ -17,6 +17,7 @@
 	
 	<mapping class="com.controller.entity.UserDTO" />
 	<mapping class="com.controller.entity.BankDTO" />
+	<mapping class="com.controller.entity.StatementDTO" />
 	
 	</session-factory>
 	

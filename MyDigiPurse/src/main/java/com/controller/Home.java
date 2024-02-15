@@ -1,6 +1,9 @@
 package com.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,13 +18,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.controller.dao.UserDao;
 import com.controller.entity.BankDTO;
+import com.controller.entity.StatementDTO;
 import com.controller.entity.UserDTO;
+
+
+
 
 
 @Controller
 public class Home {
 	
 	UserDao userDAO= new UserDao();
+	
 	@GetMapping("/registration")
 	public ModelAndView  getRegistrationPage() {
 		ModelAndView mv= new ModelAndView();
@@ -156,6 +164,7 @@ public class Home {
 	        
 	        modelAndView.addObject("accountID", accountID);
 	        
+	       
 	        if ("Statement".equals(selectedAction)) {
 	            modelAndView.setViewName("Statement"); 
 	        } else if ("AddMoney".equals(selectedAction)) {
@@ -163,7 +172,7 @@ public class Home {
 	        } else if ("SendMoney".equals(selectedAction)) {
 	            modelAndView.setViewName("SendMoney"); 
 	        } else {
-	            modelAndView.setViewName("home"); 
+	            modelAndView.setViewName("login"); 
 	        }
 	        
 	        return modelAndView;
@@ -174,23 +183,104 @@ public class Home {
 	    public ModelAndView addMoney(@RequestParam("accountID") int accountID,
 	                                   @RequestParam("amount") double amount) {
 	    	ModelAndView modelAndView = new ModelAndView();
+	    	Date currentDate = new Date(System.currentTimeMillis());
+	    	
+	    	StatementDTO transaction=new StatementDTO(accountID,accountID,amount,"add", currentDate);
+	    	
+	    	modelAndView.addObject("accountID", accountID);
 	    	double currentBalance=userDAO.getCurrentBalance(accountID);
 	    	double newBalance=currentBalance+amount;
+	    	
+	    	
 	    	boolean updateBalance=userDAO.updateBalance(accountID, newBalance);
-	    	if(updateBalance) {
+	    	boolean TransactionSuccess=userDAO.logTransaction(transaction);
+	    	if(updateBalance && TransactionSuccess) {
 	    		
 	    		modelAndView.setViewName("login");
 	    		
 	    	}else {
-	    		modelAndView.setViewName("register");
+	    		modelAndView.setViewName("info");
 	    	}
+	    	
+//	    	modelAndView.addObject("newBalance", newBalance);
+//	    	modelAndView.setViewName("info");
+	    
 			return modelAndView;
 	    	
 	    	
 	    }
 	    
+	    @GetMapping("/logout")
+		public ModelAndView  logoutprocess() {
+	    	
+	    	
+			ModelAndView mv= new ModelAndView();
+			mv.setViewName("logout");
+			return mv;
+		}     
+	    @PostMapping("/sendmoney")
+	    public ModelAndView sendMoney(@RequestParam("accountID") int sourceAccountID,
+	                                   @RequestParam("amount") double amount,
+	                                   @RequestParam("recipientAccount") String toAccountNumber) throws SQLException {
+	    	
+	    	ModelAndView mv= new ModelAndView();
+	    	int targetAccountID = userDAO.getAccountIdByAccountNumber(toAccountNumber);
+	    	
+	    	double sourceBalance=userDAO.getCurrentBalance(sourceAccountID);
+	    	double newSourceBalance=sourceBalance-amount;
+	    	boolean updateSourceBalance=userDAO.updateBalance(sourceAccountID, newSourceBalance);
+	    	Date currentDate = new Date(System.currentTimeMillis());
+	    	
+			StatementDTO transactionOfSource=new StatementDTO(sourceAccountID,targetAccountID,amount,"debit", currentDate);
+			StatementDTO transactionOfTarget=new StatementDTO(targetAccountID,sourceAccountID,amount,"credit", currentDate);
+	    	
+	    	double targetBalance=userDAO.getCurrentBalance(targetAccountID);
+	    	double newTargetBalance=targetBalance + amount;
+	    	 boolean updateTargetBalance=userDAO.updateBalance(targetAccountID, newTargetBalance);
+	    	 
+	    	 boolean sourceTransaction=userDAO.logTransaction(transactionOfSource);
+	    	 boolean targetTransaction=userDAO.logTransaction(transactionOfTarget);
+	    	 
+	    	 if (updateSourceBalance && updateTargetBalance && sourceTransaction && targetTransaction) {
+					
+	    		 mv.setViewName("login");
+		        } else {
+		        	mv.setViewName("info");
+		        }
+			return mv;
+	    			
+
+			}
 	    
 	    
+	    @PostMapping("/transaction")
+	    public ModelAndView processTransactions(@RequestParam("accountID") int accountID,
+	                                   @RequestParam("startDate") String startDatestr,
+	                                   @RequestParam("endDate") String endDatestr) {
+	    	
+	    	ModelAndView mv= new ModelAndView();
+	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	        Date startDate = null;
+	        Date endDate = null;
+	    	 
+	    	
+	    	try {
+	    		startDate = sdf.parse(startDatestr);
+	            endDate = sdf.parse(endDatestr);
+	    	List<StatementDTO> transactions=userDAO.getAllTransactions(accountID, startDate, endDate);
+			 mv.addObject("transactions", transactions);
+			 mv.setViewName("displayStatement");
+		
+	    	}catch(Exception e) {
+	    		e.printStackTrace();
+	    	}
+			
+			return mv;
+           
+			
+			
 	    }
+	   
+}
 
 

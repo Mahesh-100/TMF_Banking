@@ -19,7 +19,7 @@
         <img src="company-logo.png" alt="Company Logo">
         <h1>MyDigiPurse</h1>
 </header>
-<form action="http://localhost:8082/TMF_Banking/StatementServlet" method="post">
+<form action="transaction" method="post">
 
 <div class="container">
 <div class="form-box">
@@ -44,7 +44,7 @@
 <label for="EndDate">End Date:</label>
         <input type="date" id="EndDate" name="endDate" required>
         <span id="endDateError" class="error-message"></span><br>
-        <input type="hidden" name="accountID" value="<%=request.getAttribute("accountID") %>">
+        <input type="hidden" name="accountID" value="${accountID}">
          <button type="submit">Submit</button> 
 
 </div>
