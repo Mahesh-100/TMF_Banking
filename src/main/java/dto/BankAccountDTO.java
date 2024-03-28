@@ -1,67 +1,60 @@
-package com.controller.entity;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="bank_info")
-public class BankDTO {
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+package dto;
+public class BankAccountDTO {
+	 
 	private int accountID;
-	@Column
-	private int user_id;
-	@Column
-	private String bank_account_no;
-	@Column
+	private String username;
+	private String account_no;
 	private String bank_name;
-	@Column
 	private String IFSC_code;
-	@Column
 	private String account_type;
-	@Column
 	private double current_balance;
 	
 	
+	public BankAccountDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
-	
-	public BankDTO(int user_id, String bank_account_no, String bank_name, String iFSC_code, String account_type,
+	public BankAccountDTO(String username, String account_no, String bank_name, String iFSC_code, String account_type,
 			double current_balance) {
 		super();
-		this.user_id = user_id;
-		this.bank_account_no = bank_account_no;
+		this.username = username;
+		this.account_no = account_no;
 		this.bank_name = bank_name;
 		IFSC_code = iFSC_code;
 		this.account_type = account_type;
 		this.current_balance = current_balance;
 	}
-	public BankDTO() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	
-	
-	public int getUser_id() {
-		return user_id;
-	}
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
-	}
+
+
+
+
+
+
+
+
+
 	public int getAccountID() {
 		return accountID;
 	}
+
+
 	public void setAccountID(int accountID) {
 		this.accountID = accountID;
 	}
-	public String getBank_account_no() {
-		return bank_account_no;
+
+
+	public String getUsername() {
+		return username;
 	}
-	public void setBank_account_no(String bank_account_no) {
-		this.bank_account_no = bank_account_no;
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getAccount_no() {
+		return account_no;
+	}
+	public void setAccount_no(String account_no) {
+		this.account_no = account_no;
 	}
 	public String getBank_name() {
 		return bank_name;
@@ -90,5 +83,5 @@ public class BankDTO {
 	
 	
 	
-
+	
 }
